@@ -63,6 +63,11 @@ flutter:
       fonts:
         - asset: fonts/Traffolight.otf
 
+    - family: M PLUS Rounded 1c
+      fonts:
+        - asset: fonts/MPLUSRounded1c-Bold.ttf
+          weight: 700
+
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

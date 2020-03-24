@@ -87,7 +87,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
                   fontWeight: FontWeight.bold,
                   fontSize: 60.0,
                   color: color,
-                  fontFamily: 'Traffolight',
+                  fontFamily: 'M PLUS Rounded 1c',
                 ),
               ),
               delay: delayedAmount + 1000,
