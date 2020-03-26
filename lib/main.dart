@@ -166,7 +166,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
                     borderRadius: new BorderRadius.circular(30.0),
                   ),
                   onPressed: () {
-                    Navigator.push(context, BouncePageRoute(widget: InputDetails()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => InputDetails()));
                   },
                 ),
               ),
