@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:infiveyears/bounce_anim.dart';
 import 'package:infiveyears/delayed_animation.dart';
 import 'package:infiveyears/input_det.dart';
 
@@ -101,7 +102,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
                 child: Container(
                   margin: EdgeInsets.only(bottom: 5.0),
                   child: Text(
-                    "Do you want to know",
+                    "Would you like to know",
                     style: TextStyle(fontSize: 20.0, color: color),
                   ),
                 ),
@@ -148,7 +149,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
             ),
             DelayedAnimation(
               child: Container(
-                margin: EdgeInsets.only(bottom: 10.0),
+                margin: EdgeInsets.only(bottom: 30.0),
                 child: RaisedButton(
                   color: Colors.white,
                   padding: EdgeInsets.only(
@@ -165,8 +166,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
                     borderRadius: new BorderRadius.circular(30.0),
                   ),
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(
-                        builder: (context) => InputDetails()));
+                    Navigator.push(context, BouncePageRoute(widget: InputDetails()));
                   },
                 ),
               ),
