@@ -67,11 +67,11 @@ class _StateID extends State<InputDetails> {
                       child: child,
                       position: Tween<Offset>(
                         begin: const Offset(1.0, 0.0),
-                        end: const Offset(0.0, 0.0),
+                        end: Offset.zero,
                       ).animate(animation),
                     );
                   },
-                  duration: Duration(milliseconds: 500),
+                  duration: Duration(milliseconds: 1000),
                   child: _body[selected]),
             ],
           )),
