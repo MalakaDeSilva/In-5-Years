@@ -66,12 +66,12 @@ class _StateID extends State<InputDetails> {
                     return SlideTransition(
                       child: child,
                       position: Tween<Offset>(
-                        begin: const Offset(1.0, 0.0),
+                        begin: const Offset(0.0, 1.0),
                         end: Offset.zero,
                       ).animate(animation),
                     );
                   },
-                  duration: Duration(milliseconds: 1000),
+                  duration: Duration(milliseconds: 500),
                   child: _body[selected]),
             ],
           )),
@@ -190,6 +190,23 @@ class _StateID extends State<InputDetails> {
     return Container(
       child: Stack(
         children: <Widget>[
+          Column(
+            children: <Widget>[
+              Expanded(child: Text("")),
+              Opacity(
+                opacity: 0.4,
+                child: Container(
+                  decoration: new BoxDecoration(
+                      borderRadius: BorderRadius.only(topLeft: Radius.circular(60), topRight: Radius.circular(60)),
+                    color: Colors.white,
+                  ),
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height*0.67,
+                  child: Text(""),
+                ),
+              ),
+            ],
+          ),
           Container(
             margin: EdgeInsets.only(left: 30.0, right: 30.0),
             child: Form(
