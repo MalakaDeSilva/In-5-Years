@@ -26,6 +26,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   avatar_glow: ^1.1.0
   shadow: ^0.1.5
+  rect_getter: 0.0.1
 
 dev_dependencies:
   flutter_test:
@@ -46,6 +47,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - images/black.png
+    - images/thinking.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -62,6 +64,11 @@ flutter:
     - family: Traffolight
       fonts:
         - asset: fonts/Traffolight.otf
+
+    - family: M PLUS Rounded 1c
+      fonts:
+        - asset: fonts/MPLUSRounded1c-Bold.ttf
+          weight: 700
 
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
