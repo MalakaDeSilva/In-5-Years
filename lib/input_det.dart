@@ -188,27 +188,65 @@ class _StateID extends State<InputDetails> {
 
   Widget _detailsForm() {
     return Center(
-      child: Container(
-        margin: EdgeInsets.only(left: 30.0, right: 30.0),
-        decoration: new BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(35)),
-          color: Color(0xFFFFFFFF).withOpacity(0.67),
-        ),
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height * 0.2,
-        child: Form(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              TextFormField(),
-              Divider(
-                color: Colors.black,
-              ),
-              TextFormField(),
-            ],
+        child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Container(
+          margin: EdgeInsets.only(left: 30.0, right: 30.0, bottom: 30.0, top: 50.0),
+          decoration: new BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(35)),
+            color: Color(0xFFFFFFFF).withOpacity(0.67),
+          ),
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height * 0.2,
+          child: Form(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                TextFormField(
+                  style: TextStyle(fontSize: 20.0),
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: "Username/Email",
+                    contentPadding: EdgeInsets.only(left: 30.0),
+                  ),
+                ),
+                Divider(
+                  color: Colors.black,
+                ),
+                TextFormField(
+                  style: TextStyle(fontSize: 20.0),
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: "Password",
+                      contentPadding: EdgeInsets.only(left: 30.0)),
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-    );
+        RaisedButton(
+          color: Colors.white,
+          padding: EdgeInsets.only(
+              left: 125.0, right: 125.0, top: 15.0, bottom: 15.0),
+          child: Text(
+            'Login',
+            style: TextStyle(
+              fontSize: 20.0,
+              fontWeight: FontWeight.bold,
+              color: Colors.deepPurple,
+            ),
+          ),
+          shape: new RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(30.0),
+          ),
+          onPressed: () {
+            setState(() {
+              selected = 1;
+            });
+          },
+        )
+      ],
+    ));
   }
 }
