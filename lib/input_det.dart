@@ -187,43 +187,27 @@ class _StateID extends State<InputDetails> {
   }
 
   Widget _detailsForm() {
-    return Container(
-      child: Stack(
-        children: <Widget>[
-          Column(
+    return Center(
+      child: Container(
+        margin: EdgeInsets.only(left: 30.0, right: 30.0),
+        decoration: new BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(35)),
+          color: Color(0xFFFFFFFF).withOpacity(0.67),
+        ),
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height * 0.2,
+        child: Form(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Expanded(child: Text("")),
-              Opacity(
-                opacity: 0.65,
-                child: Container(
-                  decoration: new BoxDecoration(
-                      borderRadius: BorderRadius.only(topLeft: Radius.circular(60), topRight: Radius.circular(60)),
-                    color: Colors.white,
-                  ),
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height*0.67,
-                  child: Text(""),
-                ),
+              TextFormField(),
+              Divider(
+                color: Colors.black,
               ),
+              TextFormField(),
             ],
           ),
-          Container(
-            margin: EdgeInsets.only(left: 30.0, right: 30.0),
-            child: Form(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text("Name: "),
-                  TextFormField(),
-                  Text("Date of Birth: "),
-                  TextFormField(),
-                  Text("Gender: "),
-                  TextFormField(),
-                ],
-              ),
-            ),
-          )
-        ],
+        ),
       ),
     );
   }
