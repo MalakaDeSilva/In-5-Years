@@ -71,7 +71,7 @@ class _StateID extends State<InputDetails> {
                       ).animate(animation),
                     );
                   },
-                  duration: Duration(milliseconds: 500),
+                  duration: Duration(milliseconds: 900),
                   child: _body[selected]),
             ],
           )),
@@ -194,7 +194,7 @@ class _StateID extends State<InputDetails> {
             children: <Widget>[
               Expanded(child: Text("")),
               Opacity(
-                opacity: 0.4,
+                opacity: 0.65,
                 child: Container(
                   decoration: new BoxDecoration(
                       borderRadius: BorderRadius.only(topLeft: Radius.circular(60), topRight: Radius.circular(60)),

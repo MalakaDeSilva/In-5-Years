@@ -223,7 +223,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
       child: Container(
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: Colors.blue,
+          color: Colors.deepPurpleAccent,
         ),
       ),
       duration: animationDuration,
