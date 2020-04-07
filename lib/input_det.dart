@@ -1,3 +1,4 @@
+
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
@@ -13,10 +14,11 @@ class InputDetails extends StatefulWidget {
 
 class _StateID extends State<InputDetails> {
   int selected;
-
+  bool passwordVisible;
   @override
   void initState() {
     selected = 0;
+    passwordVisible = true;
     super.initState();
   }
 
@@ -192,13 +194,13 @@ class _StateID extends State<InputDetails> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Container(
-          margin: EdgeInsets.only(left: 30.0, right: 30.0, bottom: 30.0, top: 50.0),
+          margin: EdgeInsets.only(left: 30.0, right: 30.0, bottom: 30.0),
           decoration: new BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(35)),
             color: Color(0xFFFFFFFF).withOpacity(0.67),
           ),
           width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height * 0.2,
+          height: MediaQuery.of(context).size.height * 0.15,
           child: Form(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -208,18 +210,33 @@ class _StateID extends State<InputDetails> {
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: "Username/Email",
-                    contentPadding: EdgeInsets.only(left: 30.0),
+                    contentPadding: EdgeInsets.only(left: 30.0, top: 10.0),
                   ),
                 ),
                 Divider(
                   color: Colors.black,
                 ),
                 TextFormField(
+                  obscureText: passwordVisible,
                   style: TextStyle(fontSize: 20.0),
                   decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: "Password",
-                      contentPadding: EdgeInsets.only(left: 30.0)),
+                    border: InputBorder.none,
+                    hintText: "Password",
+                    contentPadding: EdgeInsets.only(left: 30.0, top: 10.0),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        passwordVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                        color: Theme.of(context).primaryColorDark,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          passwordVisible = !passwordVisible;
+                        });
+                      },
+                    ),
+                  ),
                 ),
               ],
             ),
