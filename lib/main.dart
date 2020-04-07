@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/cupertino.dart';
@@ -208,7 +207,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
   }
 
   void _onVerticalDragDown(DragDownDetails details) {
-    exit(0);
+    
   }
 
   Widget _ripple() {
