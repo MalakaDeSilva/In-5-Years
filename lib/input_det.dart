@@ -210,7 +210,7 @@ class _StateID extends State<InputDetails> {
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: "Username/Email",
-                    contentPadding: EdgeInsets.only(left: 130.0),
+                    contentPadding: EdgeInsets.only(left: 30.0, top: 10.0),
                   ),
                 ),
                 Divider(
@@ -222,7 +222,7 @@ class _StateID extends State<InputDetails> {
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: "Password",
-                    contentPadding: EdgeInsets.only(left: 30.0),
+                    contentPadding: EdgeInsets.only(left: 30.0, top: 10.0),
                     suffixIcon: IconButton(
                       icon: Icon(
                         passwordVisible
