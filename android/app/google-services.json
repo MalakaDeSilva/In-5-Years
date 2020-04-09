@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "620924785584",
+    "firebase_url": "https://in-5-years.firebaseio.com",
+    "project_id": "in-5-years",
+    "storage_bucket": "in-5-years.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:620924785584:android:0f2931643067d6c783fc75",
+        "android_client_info": {
+          "package_name": "lk.sliit.flutterapp.infiveyears"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "620924785584-q5hol81t1hgkg1mh45li0plbs525vo8e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkpFlWkSXDpExfMZ2SumBfEHYu4AhUIwg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "620924785584-q5hol81t1hgkg1mh45li0plbs525vo8e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
