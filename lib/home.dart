@@ -49,7 +49,22 @@ class _HomeState extends State<Home> {
     );
   }
 
- 
+  Widget _buildPageList(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
+      stream: Firestore.instance.collection('reviews').snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) return LinearProgressIndicator();
+
+        return _buildList(context, snapshot.data.documents);
+      },
+    );
+  }
+
+  Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
+    return ListView(
+      children: snapshot.map((data) => _buildPage(context, data)).toList(),
+    );
+  }
 
   Widget _buildPage(bool active) {
     final double blur = active ? 30 : 0;
@@ -70,7 +85,7 @@ class _HomeState extends State<Home> {
                   offset: Offset(offset, offset))
             ]));
   }
-
+  
   List<Widget> getWidgets() {
     List<Widget> _list = [
       Container(
