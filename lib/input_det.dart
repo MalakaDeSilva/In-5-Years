@@ -1,9 +1,9 @@
-
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:infiveyears/home.dart';
 
 import 'delayed_animation.dart';
 
@@ -258,9 +258,10 @@ class _StateID extends State<InputDetails> {
             borderRadius: new BorderRadius.circular(30.0),
           ),
           onPressed: () {
-            setState(() {
-              selected = 1;
-            });
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Home()),
+            );
           },
         )
       ],
