@@ -27,11 +27,10 @@ class _HomeState extends State<Home> {
     
     _controller.addListener((){
       int next = _controller.page.round();
-
       if(currentPage != next){
-        setState(){
+        setState(() {
           currentPage = next;
-        }
+        });
       }
     });
     super.initState();
@@ -56,6 +55,7 @@ class _HomeState extends State<Home> {
         //children: getWidgets(active),
         itemBuilder: (context, int currentIdx) {
           bool active = currentPage == currentIdx;
+
           return _buildPage(active);
         },
       ),
