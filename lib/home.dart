@@ -17,18 +17,20 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    int next = _controller.page.round();
+    /*int next = _controller.page.round();
 
     if (currentPage != next) {
       setState(() {
         currentPage = next;
       });
-    }
+    }*/
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    //bool active = true;
+    print(active);
     return Container(
       decoration: new BoxDecoration(
           gradient: new LinearGradient(
@@ -41,29 +43,24 @@ class _HomeState extends State<Home> {
       )),
       child: PageView.builder(
         controller: _controller,
+        //children: getWidgets(active),
         itemBuilder: (context, int currentIdx) {
           bool active = currentPage == currentIdx;
-          return _buildPage(active);
+          return getWidgets(active);
         },
       ),
     );
   }
 
-  Widget _buildPageList(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
-      stream: Firestore.instance.collection('reviews').snapshots(),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) return LinearProgressIndicator();
+  
+  List<Widget> getWidgets(bool active) {
+    List<Widget> _list = [
+     _buildPage(active),
+      _buildPage(active),
+      _buildPage(active)
+    ];
 
-        return _buildList(context, snapshot.data.documents);
-      },
-    );
-  }
-
-  Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
-    return ListView(
-      children: snapshot.map((data) => _buildPage(context, data)).toList(),
-    );
+    return _list;
   }
 
   Widget _buildPage(bool active) {
@@ -77,31 +74,12 @@ class _HomeState extends State<Home> {
         margin: EdgeInsets.only(top: top, bottom: 50, right: 30),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
-            color: Colors.red,
+            color: Colors.white,
             boxShadow: [
               BoxShadow(
                   color: Colors.black87,
                   blurRadius: blur,
                   offset: Offset(offset, offset))
             ]));
-  }
-  
-  List<Widget> getWidgets() {
-    List<Widget> _list = [
-      Container(
-        margin: EdgeInsets.only(top: 50, bottom: 50, right: 20),
-        color: Colors.red,
-      ),
-      Container(
-        margin: EdgeInsets.only(top: 50, bottom: 50, right: 20),
-        color: Colors.green,
-      ),
-      Container(
-        margin: EdgeInsets.only(top: 50, bottom: 50, right: 20),
-        color: Colors.blue,
-      )
-    ];
-
-    return _list;
   }
 }
