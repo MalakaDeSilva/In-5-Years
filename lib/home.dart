@@ -24,13 +24,23 @@ class _HomeState extends State<Home> {
         currentPage = next;
       });
     }*/
+    
+    _controller.addListener((){
+      int next = _controller.page.round();
+
+      if(currentPage != next){
+        setState(){
+          currentPage = next;
+        }
+      }
+    });
     super.initState();
   }
+  
 
   @override
   Widget build(BuildContext context) {
     //bool active = true;
-    print(active);
     return Container(
       decoration: new BoxDecoration(
           gradient: new LinearGradient(
@@ -46,21 +56,10 @@ class _HomeState extends State<Home> {
         //children: getWidgets(active),
         itemBuilder: (context, int currentIdx) {
           bool active = currentPage == currentIdx;
-          return getWidgets(active);
+          return _buildPage(active);
         },
       ),
     );
-  }
-
-  
-  List<Widget> getWidgets(bool active) {
-    List<Widget> _list = [
-     _buildPage(active),
-      _buildPage(active),
-      _buildPage(active)
-    ];
-
-    return _list;
   }
 
   Widget _buildPage(bool active) {
