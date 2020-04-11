@@ -17,17 +17,9 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    /*int next = _controller.page.round();
-
-    if (currentPage != next) {
-      setState(() {
-        currentPage = next;
-      });
-    }*/
-    
-    _controller.addListener((){
+    _controller.addListener(() {
       int next = _controller.page.round();
-      if(currentPage != next){
+      if (currentPage != next) {
         setState(() {
           currentPage = next;
         });
@@ -35,11 +27,9 @@ class _HomeState extends State<Home> {
     });
     super.initState();
   }
-  
 
   @override
   Widget build(BuildContext context) {
-    //bool active = true;
     return Container(
       decoration: new BoxDecoration(
           gradient: new LinearGradient(
@@ -52,7 +42,6 @@ class _HomeState extends State<Home> {
       )),
       child: PageView.builder(
         controller: _controller,
-        //children: getWidgets(active),
         itemBuilder: (context, int currentIdx) {
           bool active = currentPage == currentIdx;
 
@@ -65,7 +54,7 @@ class _HomeState extends State<Home> {
   Widget _buildPage(bool active) {
     final double blur = active ? 30 : 0;
     final double offset = active ? 20 : 0;
-    final double top = active ? 100 : 200;
+    final double top = active ? 150 : 300;
 
     return AnimatedContainer(
         duration: Duration(milliseconds: 500),
