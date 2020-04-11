@@ -17,13 +17,6 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    /*int next = _controller.page.round();
-
-    if (currentPage != next) {
-      setState(() {
-        currentPage = next;
-      });
-    }*/
     
     _controller.addListener((){
       int next = _controller.page.round();
