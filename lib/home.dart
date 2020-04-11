@@ -39,7 +39,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    //bool active = true;
+
     return Container(
       decoration: new BoxDecoration(
           gradient: new LinearGradient(
@@ -65,7 +65,7 @@ class _HomeState extends State<Home> {
   Widget _buildPage(bool active) {
     final double blur = active ? 30 : 0;
     final double offset = active ? 20 : 0;
-    final double top = active ? 100 : 200;
+    final double top = active ? 150 : 300;
 
     return AnimatedContainer(
         duration: Duration(milliseconds: 500),
