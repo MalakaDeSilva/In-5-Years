@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:infiveyears/model/personal_det.dart';
+import 'package:intl/intl.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -78,6 +79,7 @@ class _HomeState extends State<Home> {
     final double offset = active ? 20 : 0;
     final double top = active ? 150 : 300;
     PersonalDetails _pdet = PersonalDetails.fromSnapshot(document);
+    DateFormat df = new DateFormat("d MMM y");
 
     return AnimatedContainer(
       duration: Duration(milliseconds: 500),
@@ -92,7 +94,45 @@ class _HomeState extends State<Home> {
                 blurRadius: blur,
                 offset: Offset(offset, offset))
           ]),
-      child: Text(_pdet.name),
+      child: Column(
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.only(left: 19),
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: Material(
+                child: Text(
+                  df.format(_pdet.date.toDate()),
+                  style: TextStyle(fontSize: 17.0, color: Colors.black54),
+                ),
+              ),
+            ),
+          ),
+          Divider(
+            indent: 10,
+            endIndent: 10,
+            color: Colors.black,
+          ),
+          Material(
+            child: Text(
+              _pdet.name,
+              style: TextStyle(
+                  fontSize: 30.0,
+                  color: Colors.black,
+                  fontFamily: "Traffolight"),
+            ),
+          ),
+          Expanded(
+            child: Text(""),
+          ),
+          Container(
+              margin: EdgeInsets.only(right: 15.0, bottom: 15.0, left: 15.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[Icon(Icons.delete), Icon(Icons.edit)],
+              ))
+        ],
+      ),
     );
   }
 }
