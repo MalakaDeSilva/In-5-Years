@@ -58,14 +58,15 @@ class _HomeState extends State<Home> {
       controller: _controller,
       itemCount: snapshot.data.documents.length,
       itemBuilder: (context, int currentIdx) {
+        final DocumentSnapshot document = snapshot.data.documents[currentIdx];
         bool active = currentPage == currentIdx;
 
-        return _buildPage(active);
+        return _buildPage(active, document);
       },
     );
   }
 
-  Widget _buildPage(bool active) {
+  Widget _buildPage(bool active, DocumentSnapshot document) {
     final double blur = active ? 30 : 0;
     final double offset = active ? 20 : 0;
     final double top = active ? 150 : 300;
