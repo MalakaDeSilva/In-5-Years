@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:infiveyears/model/personal_det.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -8,6 +10,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final Firestore firestore = Firestore.instance;
+
   PageController _controller = PageController(
     initialPage: 0,
     viewportFraction: 0.8,
@@ -40,34 +44,55 @@ class _HomeState extends State<Home> {
           Color.fromARGB(255, 74, 0, 224)
         ],
       )),
-      child: PageView.builder(
-        controller: _controller,
-        itemBuilder: (context, int currentIdx) {
-          bool active = currentPage == currentIdx;
+      child: StreamBuilder<QuerySnapshot>(
+          stream: firestore.collection("queries").snapshots(),
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (!snapshot.hasData) {
+              return SpinKitDoubleBounce(
+                color: Colors.white,
+                size: 90.0,
+              );
+            }
 
-          return _buildPage(active);
-        },
-      ),
+            return _buildQueryList(snapshot);
+          }),
     );
   }
 
-  Widget _buildPage(bool active) {
+  Widget _buildQueryList(AsyncSnapshot<QuerySnapshot> snapshot) {
+    return PageView.builder(
+      controller: _controller,
+      itemCount: snapshot.data.documents.length,
+      itemBuilder: (context, int currentIdx) {
+        final DocumentSnapshot document = snapshot.data.documents[currentIdx];
+        bool active = currentPage == currentIdx;
+
+        return _buildPage(active, document);
+      },
+    );
+  }
+
+  Widget _buildPage(bool active, DocumentSnapshot document) {
     final double blur = active ? 30 : 0;
     final double offset = active ? 20 : 0;
     final double top = active ? 150 : 300;
+    PersonalDetails _pdet = PersonalDetails.fromSnapshot(document);
 
     return AnimatedContainer(
-        duration: Duration(milliseconds: 500),
-        curve: Curves.easeOutQuint,
-        margin: EdgeInsets.only(top: top, bottom: 50, right: 30),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.black87,
-                  blurRadius: blur,
-                  offset: Offset(offset, offset))
-            ]));
+      duration: Duration(milliseconds: 500),
+      curve: Curves.easeOutQuint,
+      margin: EdgeInsets.only(top: top, bottom: 50, right: 30),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+                color: Colors.black87,
+                blurRadius: blur,
+                offset: Offset(offset, offset))
+          ]),
+      child: Text(_pdet.name),
+    );
   }
 }
