@@ -196,7 +196,7 @@ class _StateID extends State<InputDetails> {
         Container(
           margin: EdgeInsets.only(left: 30.0, right: 30.0, bottom: 30.0),
           decoration: new BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(35)),
+            borderRadius: BorderRadius.all(Radius.circular(20)),
             color: Color(0xFFFFFFFF).withOpacity(0.67),
           ),
           width: MediaQuery.of(context).size.width,
