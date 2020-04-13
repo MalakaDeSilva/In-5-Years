@@ -8,6 +8,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final Firestore firestore = Firestore.instance;
+
   PageController _controller = PageController(
     initialPage: 0,
     viewportFraction: 0.8,
@@ -40,14 +42,26 @@ class _HomeState extends State<Home> {
           Color.fromARGB(255, 74, 0, 224)
         ],
       )),
-      child: PageView.builder(
-        controller: _controller,
-        itemBuilder: (context, int currentIdx) {
-          bool active = currentPage == currentIdx;
+      child: StreamBuilder<QuerySnapshot>(
+          stream: firestore.collection("queries").snapshots(),
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (!snapshot.hasData) return const Text('Loading...');
 
-          return _buildPage(active);
-        },
-      ),
+            return _buildQueryList(snapshot);
+          }),
+    );
+  }
+
+  Widget _buildQueryList(AsyncSnapshot<QuerySnapshot> snapshot) {
+    return PageView.builder(
+      controller: _controller,
+      itemCount: snapshot.data.documents.length,
+      itemBuilder: (context, int currentIdx) {
+        bool active = currentPage == currentIdx;
+
+        return _buildPage(active);
+      },
     );
   }
 
