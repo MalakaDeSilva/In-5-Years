@@ -84,7 +84,7 @@ class _HomeState extends State<Home> {
     return AnimatedContainer(
       duration: Duration(milliseconds: 500),
       curve: Curves.easeOutQuint,
-      margin: EdgeInsets.only(top: top, bottom: 50, right: 30),
+      margin: EdgeInsets.only(top: top, bottom: 100, right: 30),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           color: Colors.white,
@@ -101,6 +101,23 @@ class _HomeState extends State<Home> {
             child: Align(
               alignment: Alignment.topLeft,
               child: Material(
+                color: Colors.white,
+                child: Text(
+                  _pdet.name,
+                  style: TextStyle(
+                      fontSize: 40.0,
+                      color: Colors.black,
+                      fontFamily: "Traffolight"),
+                ),
+              ),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(left: 19),
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: Material(
+                color: Colors.white,
                 child: Text(
                   df.format(_pdet.date.toDate()),
                   style: TextStyle(fontSize: 17.0, color: Colors.black54),
@@ -113,17 +130,41 @@ class _HomeState extends State<Home> {
             endIndent: 10,
             color: Colors.black,
           ),
-          Material(
-            child: Text(
-              _pdet.name,
-              style: TextStyle(
-                  fontSize: 30.0,
-                  color: Colors.black,
-                  fontFamily: "Traffolight"),
+          Expanded(
+            child: Material(
+              color: Colors.white,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Text(
+                    "name - "+ _pdet.name,
+                    style: TextStyle(fontSize: 17.0, color: Colors.black54, fontFamily: "Traffolight"),
+                  ),
+                  Text(
+                    "Date of Birth - "+ df.format(_pdet.dob.toDate()),
+                    style: TextStyle(fontSize: 17.0, color: Colors.black54, fontFamily: "Traffolight"),
+                  ),
+                  Text(
+                    "Gender - "+_pdet.gender,
+                    style: TextStyle(fontSize: 17.0, color: Colors.black54, fontFamily: "Traffolight"),
+                  ),
+                  Text(
+                    "Civil status - "+ _pdet.civilstatus,
+                    style: TextStyle(fontSize: 17.0, color: Colors.black54, fontFamily: "Traffolight"),
+                  ),
+                  Text(
+                    "Employment - "+_pdet.employement.toString(),
+                    style: TextStyle(fontSize: 17.0, color: Colors.black54, fontFamily: "Traffolight"),
+                  )
+                ],
+              ),
             ),
           ),
-          Expanded(
-            child: Text(""),
+          Divider(
+            indent: 10,
+            endIndent: 10,
+            color: Colors.black,
           ),
           Container(
               margin: EdgeInsets.only(right: 15.0, bottom: 15.0, left: 15.0),

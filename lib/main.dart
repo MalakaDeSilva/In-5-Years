@@ -2,7 +2,7 @@ import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:infiveyears/delayed_animation.dart';
-import 'package:infiveyears/input_det.dart';
+import 'package:infiveyears/login.dart';
 import 'package:rect_getter/rect_getter.dart';
 
 import 'fade_out_anim.dart';
@@ -201,7 +201,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
 
   void _goToNextPage() {
     Navigator.of(context)
-        .push(FadeRouteBuilder(page: InputDetails()))
+        .push(FadeRouteBuilder(page: Login()))
         .then((_) => setState(() => rect = null));
   }
 
