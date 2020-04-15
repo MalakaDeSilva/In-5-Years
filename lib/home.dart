@@ -138,24 +138,39 @@ class _HomeState extends State<Home> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   Text(
-                    "name - "+ _pdet.name,
-                    style: TextStyle(fontSize: 20.0, color: Colors.black54, fontFamily: "Traffolight"),
+                    "name - " + _pdet.name,
+                    style: TextStyle(
+                        fontSize: 20.0,
+                        color: Colors.black54,
+                        fontFamily: "Traffolight"),
                   ),
                   Text(
-                    "Date of Birth - "+ df.format(_pdet.dob.toDate()),
-                    style: TextStyle(fontSize: 20.0, color: Colors.black54, fontFamily: "Traffolight"),
+                    "Date of Birth - " + df.format(_pdet.dob.toDate()),
+                    style: TextStyle(
+                        fontSize: 20.0,
+                        color: Colors.black54,
+                        fontFamily: "Traffolight"),
                   ),
                   Text(
-                    "Gender - "+_pdet.gender,
-                    style: TextStyle(fontSize: 20.0, color: Colors.black54, fontFamily: "Traffolight"),
+                    "Gender - " + _pdet.gender,
+                    style: TextStyle(
+                        fontSize: 20.0,
+                        color: Colors.black54,
+                        fontFamily: "Traffolight"),
                   ),
                   Text(
-                    "Civil status - "+ _pdet.civilstatus,
-                    style: TextStyle(fontSize: 20.0, color: Colors.black54, fontFamily: "Traffolight"),
+                    "Civil status - " + _pdet.civilstatus,
+                    style: TextStyle(
+                        fontSize: 20.0,
+                        color: Colors.black54,
+                        fontFamily: "Traffolight"),
                   ),
                   Text(
-                    "Employment - "+_pdet.employement.toString(),
-                    style: TextStyle(fontSize: 20.0, color: Colors.black54, fontFamily: "Traffolight"),
+                    "Employment - " + _pdet.employement.toString(),
+                    style: TextStyle(
+                        fontSize: 20.0,
+                        color: Colors.black54,
+                        fontFamily: "Traffolight"),
                   )
                 ],
               ),
@@ -165,15 +180,41 @@ class _HomeState extends State<Home> {
             indent: 10,
             endIndent: 10,
             color: Colors.black,
+            height: 0,
           ),
-          Container(
-              margin: EdgeInsets.only(right: 15.0, bottom: 15.0, left: 15.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[Icon(Icons.delete), Icon(Icons.edit)],
-              ))
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  onTap: _delete,
+                  borderRadius:
+                      BorderRadius.only(bottomLeft: Radius.circular(20)),
+                  child: Container(
+                      padding: EdgeInsets.only(
+                          left: 10, bottom: 10, right: 10, top: 5),
+                      child: Icon(Icons.delete)),
+                ),
+              ),
+              Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  onTap: _delete,
+                  borderRadius:
+                      BorderRadius.only(bottomRight: Radius.circular(20)),
+                  child: Container(
+                      padding: EdgeInsets.only(
+                          left: 10, bottom: 10, right: 10, top: 5),
+                      child: Icon(Icons.edit)),
+                ),
+              ),
+            ],
+          )
         ],
       ),
     );
   }
+
+  void _delete() {}
 }
