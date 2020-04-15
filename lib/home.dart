@@ -139,23 +139,23 @@ class _HomeState extends State<Home> {
                 children: <Widget>[
                   Text(
                     "name - "+ _pdet.name,
-                    style: TextStyle(fontSize: 17.0, color: Colors.black54, fontFamily: "Traffolight"),
+                    style: TextStyle(fontSize: 20.0, color: Colors.black54, fontFamily: "Traffolight"),
                   ),
                   Text(
                     "Date of Birth - "+ df.format(_pdet.dob.toDate()),
-                    style: TextStyle(fontSize: 17.0, color: Colors.black54, fontFamily: "Traffolight"),
+                    style: TextStyle(fontSize: 20.0, color: Colors.black54, fontFamily: "Traffolight"),
                   ),
                   Text(
                     "Gender - "+_pdet.gender,
-                    style: TextStyle(fontSize: 17.0, color: Colors.black54, fontFamily: "Traffolight"),
+                    style: TextStyle(fontSize: 20.0, color: Colors.black54, fontFamily: "Traffolight"),
                   ),
                   Text(
                     "Civil status - "+ _pdet.civilstatus,
-                    style: TextStyle(fontSize: 17.0, color: Colors.black54, fontFamily: "Traffolight"),
+                    style: TextStyle(fontSize: 20.0, color: Colors.black54, fontFamily: "Traffolight"),
                   ),
                   Text(
                     "Employment - "+_pdet.employement.toString(),
-                    style: TextStyle(fontSize: 17.0, color: Colors.black54, fontFamily: "Traffolight"),
+                    style: TextStyle(fontSize: 20.0, color: Colors.black54, fontFamily: "Traffolight"),
                   )
                 ],
               ),
