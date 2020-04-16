@@ -100,7 +100,10 @@ class _HomeState extends State<Home> {
   }
 
   void _delete(DocumentSnapshot documentSnapshot) {
-  
+    firestore
+        .collection("queries")
+        .document(documentSnapshot.reference.documentID)
+        .delete();
   }
 
   Widget _content(PersonalDetails _pdet, DocumentSnapshot documentSnapshot) {
