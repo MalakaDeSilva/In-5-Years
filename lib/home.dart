@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -12,6 +13,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final Firestore firestore = Firestore.instance;
+  BuildContext _context;
 
   PageController _controller = PageController(
     initialPage: 0,
@@ -35,6 +37,8 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    _context = context;
+
     return Container(
       decoration: new BoxDecoration(
           gradient: new LinearGradient(
@@ -204,7 +208,54 @@ class _HomeState extends State<Home> {
               color: Colors.transparent,
               child: InkWell(
                 onTap: () {
-                  _delete(documentSnapshot);
+                  showDialog(
+                      context: _context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text(
+                            "Delete!",
+                            style: TextStyle(
+                                fontSize: 30.0,
+                                color: Colors.black,
+                                fontFamily: "Traffolight",
+                                fontWeight: FontWeight.bold),
+                          ),
+                          content: Text(
+                            "Do you want to delete?",
+                            style: TextStyle(
+                                fontSize: 20.0,
+                                color: Colors.black,
+                                fontFamily: "Traffolight"),
+                          ),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text(
+                                "Yes",
+                                style: TextStyle(
+                                    fontSize: 20.0,
+                                    color: Colors.black54,
+                                    fontFamily: "Traffolight"),
+                              ),
+                              onPressed: () {
+                                _delete(documentSnapshot);
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                            FlatButton(
+                              child: Text(
+                                "No",
+                                style: TextStyle(
+                                    fontSize: 20.0,
+                                    color: Colors.black54,
+                                    fontFamily: "Traffolight"),
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            )
+                          ],
+                        );
+                      });
                 },
                 borderRadius:
                     BorderRadius.only(bottomLeft: Radius.circular(20)),
