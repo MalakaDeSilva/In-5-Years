@@ -7,6 +7,16 @@ import 'package:infiveyears/home.dart';
 
 import 'delayed_animation.dart';
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:infiveyears/services/auth_services.dart';
+
+var authHandler = new Auth();
+
+String _emailId;
+String _password;
+final _emailIdController = TextEditingController(text: '');
+final _passwordController = TextEditingController(text: '');
+
 class Login extends StatefulWidget {
   @override
   State createState() => _StateID();
@@ -68,6 +78,10 @@ class _StateID extends State<Login> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 TextFormField(
+                  onSaved: (value) {
+                    _emailId = value;
+                  },
+                  controller: _emailIdController,
                   style: TextStyle(fontSize: 20.0),
                   decoration: InputDecoration(
                     border: InputBorder.none,
@@ -79,6 +93,10 @@ class _StateID extends State<Login> {
                   color: Colors.black,
                 ),
                 TextFormField(
+                  onSaved: (value) {
+                    _emailId = value;
+                  },
+                  controller: _passwordController,
                   obscureText: passwordVisible,
                   style: TextStyle(fontSize: 20.0),
                   decoration: InputDecoration(
@@ -120,10 +138,13 @@ class _StateID extends State<Login> {
             borderRadius: new BorderRadius.circular(30.0),
           ),
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Home()),
-            );
+            authHandler
+                .handleSignInEmail(
+                    _emailIdController.text, _passwordController.text)
+                .then((FirebaseUser user) {
+              Navigator.push(context,
+                  new MaterialPageRoute(builder: (context) => new Home()));
+            }).catchError((e) => print(e));
           },
         )
       ],

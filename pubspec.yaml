@@ -1,7 +1,6 @@
 name: infiveyears
 description: The problems you would be facing after 5 years from now
 
-
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
 # followed by an optional build number separated by a +.
@@ -30,18 +29,17 @@ dependencies:
   cloud_firestore: ^0.13.0+1
   flutter_spinkit: "^4.1.2"
   intl: ^0.16.1
+  firebase_auth: ^0.14.0+5
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -72,6 +70,5 @@ flutter:
       fonts:
         - asset: fonts/MPLUSRounded1c-Bold.ttf
           weight: 700
-
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
