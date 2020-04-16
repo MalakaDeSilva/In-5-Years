@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -12,6 +13,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final Firestore firestore = Firestore.instance;
+  BuildContext _context;
 
   PageController _controller = PageController(
     initialPage: 0,
@@ -35,6 +37,8 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    _context = context;
+
     return Container(
       decoration: new BoxDecoration(
           gradient: new LinearGradient(
@@ -79,142 +83,202 @@ class _HomeState extends State<Home> {
     final double offset = active ? 20 : 0;
     final double top = active ? 150 : 300;
     PersonalDetails _pdet = PersonalDetails.fromSnapshot(document);
-    DateFormat df = new DateFormat("d MMM y");
 
-    return AnimatedContainer(
-      duration: Duration(milliseconds: 500),
-      curve: Curves.easeOutQuint,
-      margin: EdgeInsets.only(top: top, bottom: 100, right: 30),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-                color: Colors.black87,
-                blurRadius: blur,
-                offset: Offset(offset, offset))
-          ]),
-      child: Column(
-        children: <Widget>[
-          Container(
-            margin: EdgeInsets.only(left: 19),
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: Material(
-                color: Colors.white,
-                child: Text(
-                  _pdet.name,
-                  style: TextStyle(
-                      fontSize: 40.0,
-                      color: Colors.black,
-                      fontFamily: "Traffolight"),
-                ),
-              ),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(left: 19),
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: Material(
-                color: Colors.white,
-                child: Text(
-                  df.format(_pdet.date.toDate()),
-                  style: TextStyle(fontSize: 17.0, color: Colors.black54),
-                ),
-              ),
-            ),
-          ),
-          Divider(
-            indent: 10,
-            endIndent: 10,
-            color: Colors.black,
-          ),
-          Expanded(
-            child: Material(
-              color: Colors.white,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Text(
-                    "name - " + _pdet.name,
-                    style: TextStyle(
-                        fontSize: 20.0,
-                        color: Colors.black54,
-                        fontFamily: "Traffolight"),
-                  ),
-                  Text(
-                    "Date of Birth - " + df.format(_pdet.dob.toDate()),
-                    style: TextStyle(
-                        fontSize: 20.0,
-                        color: Colors.black54,
-                        fontFamily: "Traffolight"),
-                  ),
-                  Text(
-                    "Gender - " + _pdet.gender,
-                    style: TextStyle(
-                        fontSize: 20.0,
-                        color: Colors.black54,
-                        fontFamily: "Traffolight"),
-                  ),
-                  Text(
-                    "Civil status - " + _pdet.civilstatus,
-                    style: TextStyle(
-                        fontSize: 20.0,
-                        color: Colors.black54,
-                        fontFamily: "Traffolight"),
-                  ),
-                  Text(
-                    "Employment - " + _pdet.employement.toString(),
-                    style: TextStyle(
-                        fontSize: 20.0,
-                        color: Colors.black54,
-                        fontFamily: "Traffolight"),
-                  )
-                ],
-              ),
-            ),
-          ),
-          Divider(
-            indent: 10,
-            endIndent: 10,
-            color: Colors.black,
-            height: 0,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  onTap: _delete,
-                  borderRadius:
-                      BorderRadius.only(bottomLeft: Radius.circular(20)),
-                  child: Container(
-                      padding: EdgeInsets.only(
-                          left: 10, bottom: 10, right: 10, top: 5),
-                      child: Icon(Icons.delete)),
-                ),
-              ),
-              Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  onTap: _delete,
-                  borderRadius:
-                      BorderRadius.only(bottomRight: Radius.circular(20)),
-                  child: Container(
-                      padding: EdgeInsets.only(
-                          left: 10, bottom: 10, right: 10, top: 5),
-                      child: Icon(Icons.edit)),
-                ),
-              ),
-            ],
-          )
-        ],
+    return GestureDetector(
+      child: AnimatedContainer(
+        duration: Duration(milliseconds: 500),
+        curve: Curves.easeOutQuint,
+        margin: EdgeInsets.only(top: top, bottom: 100, right: 30),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.black87,
+                  blurRadius: blur,
+                  offset: Offset(offset, offset))
+            ]),
+        child: _content(_pdet, document),
       ),
     );
   }
 
-  void _delete() {}
+  void _delete(DocumentSnapshot documentSnapshot) {
+    firestore
+        .collection("queries")
+        .document(documentSnapshot.reference.documentID)
+        .delete();
+  }
+
+  Widget _content(PersonalDetails _pdet, DocumentSnapshot documentSnapshot) {
+    DateFormat df = new DateFormat("d MMM y");
+
+    return Column(
+      children: <Widget>[
+        Container(
+          margin: EdgeInsets.only(left: 19),
+          child: Align(
+            alignment: Alignment.topLeft,
+            child: Material(
+              color: Colors.white,
+              child: Text(
+                _pdet.name,
+                style: TextStyle(
+                    fontSize: 40.0,
+                    color: Colors.black,
+                    fontFamily: "Traffolight"),
+              ),
+            ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 19),
+          child: Align(
+            alignment: Alignment.topLeft,
+            child: Material(
+              color: Colors.white,
+              child: Text(
+                df.format(_pdet.date.toDate()),
+                style: TextStyle(fontSize: 17.0, color: Colors.black54),
+              ),
+            ),
+          ),
+        ),
+        Divider(
+          indent: 10,
+          endIndent: 10,
+          color: Colors.black,
+        ),
+        Expanded(
+          child: Material(
+            color: Colors.white,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Text(
+                  "name - " + _pdet.name,
+                  style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.black54,
+                      fontFamily: "Traffolight"),
+                ),
+                Text(
+                  "Date of Birth - " + df.format(_pdet.dob.toDate()),
+                  style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.black54,
+                      fontFamily: "Traffolight"),
+                ),
+                Text(
+                  "Gender - " + _pdet.gender,
+                  style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.black54,
+                      fontFamily: "Traffolight"),
+                ),
+                Text(
+                  "Civil status - " + _pdet.civilstatus,
+                  style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.black54,
+                      fontFamily: "Traffolight"),
+                ),
+                Text(
+                  "Employment - " + _pdet.employement.toString(),
+                  style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.black54,
+                      fontFamily: "Traffolight"),
+                )
+              ],
+            ),
+          ),
+        ),
+        Divider(
+          indent: 10,
+          endIndent: 10,
+          color: Colors.black,
+          height: 0,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: () {
+                  showDialog(
+                      context: _context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text(
+                            "Delete!",
+                            style: TextStyle(
+                                fontSize: 30.0,
+                                color: Colors.black,
+                                fontFamily: "Traffolight",
+                                fontWeight: FontWeight.bold),
+                          ),
+                          content: Text(
+                            "Do you want to delete?",
+                            style: TextStyle(
+                                fontSize: 20.0,
+                                color: Colors.black,
+                                fontFamily: "Traffolight"),
+                          ),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text(
+                                "Yes",
+                                style: TextStyle(
+                                    fontSize: 20.0,
+                                    color: Colors.black54,
+                                    fontFamily: "Traffolight"),
+                              ),
+                              onPressed: () {
+                                _delete(documentSnapshot);
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                            FlatButton(
+                              child: Text(
+                                "No",
+                                style: TextStyle(
+                                    fontSize: 20.0,
+                                    color: Colors.black54,
+                                    fontFamily: "Traffolight"),
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            )
+                          ],
+                        );
+                      });
+                },
+                borderRadius:
+                    BorderRadius.only(bottomLeft: Radius.circular(20)),
+                child: Container(
+                    padding: EdgeInsets.only(
+                        left: 10, bottom: 10, right: 10, top: 5),
+                    child: Icon(Icons.delete)),
+              ),
+            ),
+            Material(
+              color: Colors.transparent,
+              child: InkWell(
+                borderRadius:
+                    BorderRadius.only(bottomRight: Radius.circular(20)),
+                child: Container(
+                    padding: EdgeInsets.only(
+                        left: 10, bottom: 10, right: 10, top: 5),
+                    child: Icon(Icons.edit)),
+              ),
+            ),
+          ],
+        )
+      ],
+    );
+  }
 }
