@@ -79,7 +79,7 @@ class _HomeState extends State<Home> {
     final double offset = active ? 20 : 0;
     final double top = active ? 150 : 300;
     PersonalDetails _pdet = PersonalDetails.fromSnapshot(document);
-    print(document.reference.documentID);
+
     return GestureDetector(
       child: AnimatedContainer(
         duration: Duration(milliseconds: 500),
