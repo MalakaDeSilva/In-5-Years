@@ -173,7 +173,7 @@ class _StateID extends State<Login> {
                   ),
                   new Container(
                       padding: EdgeInsets.only(
-                          left: 70.0, right: 90.0, top: 15.0, bottom: 15.0),
+                          left: 65.0, right: 90.0, top: 15.0, bottom: 15.0),
                       child: new Text(
                         "Sign in with Google",
                         style: TextStyle(
@@ -183,7 +183,7 @@ class _StateID extends State<Login> {
               )),
         ),
         new Container(
-          margin: EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 5.0),
+          margin: EdgeInsets.fromLTRB(30.0, 7.0, 30.0, 5.0),
           child: new RaisedButton(
               padding: EdgeInsets.only(top: 3.0, bottom: 3.0, left: 3.0),
               color: Colors.white,
@@ -207,13 +207,16 @@ class _StateID extends State<Login> {
                     height: 48.0,
                   ),
                   new Container(
+                      margin: EdgeInsets.only(
+                          left: 0.0, right: 35.0, top: 0.0, bottom: 0.0),
                       padding: EdgeInsets.only(
-                          left: 70.0, right: 70.0, top: 15.0, bottom: 15.0),
-                      child: new Text(
+                          left: 65.0, right: 40.0, top: 15.0, bottom: 15.0),
+                      child: Center(
+                          child: Text(
                         "Sign in with Facebook",
                         style: TextStyle(
                             color: Colors.black, fontWeight: FontWeight.bold),
-                      )),
+                      ))),
                 ],
               )),
         ),
