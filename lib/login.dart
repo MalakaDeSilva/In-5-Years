@@ -187,7 +187,15 @@ class _StateID extends State<Login> {
           child: new RaisedButton(
               padding: EdgeInsets.only(top: 3.0, bottom: 3.0, left: 3.0),
               color: Colors.white,
-              onPressed: () {},
+              onPressed: () async {
+                bool res = await authHandler.facebookSignedIn();
+                if (!res) {
+                  print("error logging in with facebook");
+                } else {
+                  Navigator.push(context,
+                      new MaterialPageRoute(builder: (context) => new Home()));
+                }
+              },
               shape: new RoundedRectangleBorder(
                 borderRadius: new BorderRadius.circular(30.0),
               ),
