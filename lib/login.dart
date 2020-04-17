@@ -10,8 +10,6 @@ import 'delayed_animation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:infiveyears/services/auth_services.dart';
 
-import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
-
 var authHandler = new Auth();
 
 String _emailId;
@@ -87,7 +85,7 @@ class _StateID extends State<Login> {
                   style: TextStyle(fontSize: 20.0),
                   decoration: InputDecoration(
                     border: InputBorder.none,
-                    hintText: "Username/Email : test@gmail.com",
+                    hintText: "Username/Email",
                     contentPadding: EdgeInsets.only(left: 30.0, top: 10.0),
                   ),
                 ),
@@ -103,7 +101,7 @@ class _StateID extends State<Login> {
                   style: TextStyle(fontSize: 20.0),
                   decoration: InputDecoration(
                     border: InputBorder.none,
-                    hintText: "Password : 123456",
+                    hintText: "Password",
                     contentPadding: EdgeInsets.only(left: 30.0, top: 10.0),
                     suffixIcon: IconButton(
                       icon: Icon(
@@ -154,7 +152,15 @@ class _StateID extends State<Login> {
           child: new RaisedButton(
               padding: EdgeInsets.only(top: 3.0, bottom: 3.0, left: 3.0),
               color: Colors.white,
-              onPressed: () {},
+              onPressed: () async {
+                bool res = await authHandler.loginWithGoogle();
+                if (!res) {
+                  print("error logging in with google");
+                } else {
+                  Navigator.push(context,
+                      new MaterialPageRoute(builder: (context) => new Home()));
+                }
+              },
               shape: new RoundedRectangleBorder(
                 borderRadius: new BorderRadius.circular(30.0),
               ),
