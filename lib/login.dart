@@ -10,6 +10,8 @@ import 'delayed_animation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:infiveyears/services/auth_services.dart';
 
+import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
+
 var authHandler = new Auth();
 
 String _emailId;
@@ -85,7 +87,7 @@ class _StateID extends State<Login> {
                   style: TextStyle(fontSize: 20.0),
                   decoration: InputDecoration(
                     border: InputBorder.none,
-                    hintText: "Username/Email",
+                    hintText: "Username/Email : test@gmail.com",
                     contentPadding: EdgeInsets.only(left: 30.0, top: 10.0),
                   ),
                 ),
@@ -101,7 +103,7 @@ class _StateID extends State<Login> {
                   style: TextStyle(fontSize: 20.0),
                   decoration: InputDecoration(
                     border: InputBorder.none,
-                    hintText: "Password",
+                    hintText: "Password : 123456",
                     contentPadding: EdgeInsets.only(left: 30.0, top: 10.0),
                     suffixIcon: IconButton(
                       icon: Icon(
@@ -146,7 +148,61 @@ class _StateID extends State<Login> {
                   new MaterialPageRoute(builder: (context) => new Home()));
             }).catchError((e) => print(e));
           },
-        )
+        ),
+        new Container(
+          margin: EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 5.0),
+          child: new RaisedButton(
+              padding: EdgeInsets.only(top: 3.0, bottom: 3.0, left: 3.0),
+              color: const Color(0xFF4285F4),
+              onPressed: () {},
+              shape: new RoundedRectangleBorder(
+                borderRadius: new BorderRadius.circular(30.0),
+              ),
+              child: new Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  new Image.asset(
+                    'res/images/icons/google/btn_google_dark_normal_mdpi.9.png',
+                    height: 48.0,
+                  ),
+                  new Container(
+                      padding: EdgeInsets.only(
+                          left: 90.0, right: 90.0, top: 15.0, bottom: 15.0),
+                      child: new Text(
+                        "Sign in with Google",
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
+                      )),
+                ],
+              )),
+        ),
+        new Container(
+          margin: EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 5.0),
+          child: new RaisedButton(
+              padding: EdgeInsets.only(top: 3.0, bottom: 3.0, left: 3.0),
+              color: const Color(0xFA2139D4),
+              onPressed: () {},
+              shape: new RoundedRectangleBorder(
+                borderRadius: new BorderRadius.circular(30.0),
+              ),
+              child: new Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  new Image.asset(
+                    'res/images/icons/google/btn_google_dark_normal_mdpi.9.png',
+                    height: 48.0,
+                  ),
+                  new Container(
+                      padding: EdgeInsets.only(
+                          left: 80.0, right: 80.0, top: 15.0, bottom: 15.0),
+                      child: new Text(
+                        "Sign in with Facebook",
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
+                      )),
+                ],
+              )),
+        ),
       ],
     ));
   }
