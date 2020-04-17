@@ -50,6 +50,8 @@ flutter:
   assets:
     - images/black.png
     - images/thinking.png
+    - images/google.png
+    - images/facebook.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

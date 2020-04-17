@@ -127,7 +127,7 @@ class _StateID extends State<Login> {
         RaisedButton(
           color: Colors.white,
           padding: EdgeInsets.only(
-              left: 125.0, right: 125.0, top: 15.0, bottom: 15.0),
+              left: 140.0, right: 140.0, top: 15.0, bottom: 15.0),
           child: Text(
             'Login',
             style: TextStyle(
@@ -153,7 +153,7 @@ class _StateID extends State<Login> {
           margin: EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 5.0),
           child: new RaisedButton(
               padding: EdgeInsets.only(top: 3.0, bottom: 3.0, left: 3.0),
-              color: const Color(0xFF4285F4),
+              color: Colors.white,
               onPressed: () {},
               shape: new RoundedRectangleBorder(
                 borderRadius: new BorderRadius.circular(30.0),
@@ -162,16 +162,16 @@ class _StateID extends State<Login> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   new Image.asset(
-                    'res/images/icons/google/btn_google_dark_normal_mdpi.9.png',
+                    'images/google.png',
                     height: 48.0,
                   ),
                   new Container(
                       padding: EdgeInsets.only(
-                          left: 90.0, right: 90.0, top: 15.0, bottom: 15.0),
+                          left: 70.0, right: 90.0, top: 15.0, bottom: 15.0),
                       child: new Text(
                         "Sign in with Google",
                         style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
+                            color: Colors.black, fontWeight: FontWeight.bold),
                       )),
                 ],
               )),
@@ -180,7 +180,7 @@ class _StateID extends State<Login> {
           margin: EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 5.0),
           child: new RaisedButton(
               padding: EdgeInsets.only(top: 3.0, bottom: 3.0, left: 3.0),
-              color: const Color(0xFA2139D4),
+              color: Colors.white,
               onPressed: () {},
               shape: new RoundedRectangleBorder(
                 borderRadius: new BorderRadius.circular(30.0),
@@ -189,16 +189,16 @@ class _StateID extends State<Login> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   new Image.asset(
-                    'res/images/icons/google/btn_google_dark_normal_mdpi.9.png',
+                    'images/facebook.png',
                     height: 48.0,
                   ),
                   new Container(
                       padding: EdgeInsets.only(
-                          left: 80.0, right: 80.0, top: 15.0, bottom: 15.0),
+                          left: 70.0, right: 70.0, top: 15.0, bottom: 15.0),
                       child: new Text(
                         "Sign in with Facebook",
                         style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
+                            color: Colors.black, fontWeight: FontWeight.bold),
                       )),
                 ],
               )),
