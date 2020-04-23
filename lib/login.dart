@@ -5,12 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:infiveyears/home.dart';
 
-import 'delayed_animation.dart';
+import './animations/delayed_animation.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:infiveyears/services/auth_services.dart';
-
-import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
 
 var authHandler = new Auth();
 
@@ -27,6 +25,7 @@ class Login extends StatefulWidget {
 class _StateID extends State<Login> {
   int selected;
   bool passwordVisible;
+
   @override
   void initState() {
     selected = 0;
@@ -87,7 +86,7 @@ class _StateID extends State<Login> {
                   style: TextStyle(fontSize: 20.0),
                   decoration: InputDecoration(
                     border: InputBorder.none,
-                    hintText: "Username/Email : test@gmail.com",
+                    hintText: "Username/Email",
                     contentPadding: EdgeInsets.only(left: 30.0, top: 10.0),
                   ),
                 ),
@@ -103,7 +102,7 @@ class _StateID extends State<Login> {
                   style: TextStyle(fontSize: 20.0),
                   decoration: InputDecoration(
                     border: InputBorder.none,
-                    hintText: "Password : 123456",
+                    hintText: "Password",
                     contentPadding: EdgeInsets.only(left: 30.0, top: 10.0),
                     suffixIcon: IconButton(
                       icon: Icon(
@@ -154,7 +153,15 @@ class _StateID extends State<Login> {
           child: new RaisedButton(
               padding: EdgeInsets.only(top: 3.0, bottom: 3.0, left: 3.0),
               color: Colors.white,
-              onPressed: () {},
+              onPressed: () async {
+                bool res = await authHandler.loginWithGoogle();
+                if (!res) {
+                  print("error logging in with google");
+                } else {
+                  Navigator.push(context,
+                      new MaterialPageRoute(builder: (context) => new Home()));
+                }
+              },
               shape: new RoundedRectangleBorder(
                 borderRadius: new BorderRadius.circular(30.0),
               ),
@@ -167,7 +174,7 @@ class _StateID extends State<Login> {
                   ),
                   new Container(
                       padding: EdgeInsets.only(
-                          left: 70.0, right: 90.0, top: 15.0, bottom: 15.0),
+                          left: 65.0, right: 90.0, top: 15.0, bottom: 15.0),
                       child: new Text(
                         "Sign in with Google",
                         style: TextStyle(
@@ -177,11 +184,19 @@ class _StateID extends State<Login> {
               )),
         ),
         new Container(
-          margin: EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 5.0),
+          margin: EdgeInsets.fromLTRB(30.0, 7.0, 30.0, 5.0),
           child: new RaisedButton(
               padding: EdgeInsets.only(top: 3.0, bottom: 3.0, left: 3.0),
               color: Colors.white,
-              onPressed: () {},
+              onPressed: () async {
+                bool res = await authHandler.facebookSignedIn();
+                if (!res) {
+                  print("error logging in with facebook");
+                } else {
+                  Navigator.push(context,
+                      new MaterialPageRoute(builder: (context) => new Home()));
+                }
+              },
               shape: new RoundedRectangleBorder(
                 borderRadius: new BorderRadius.circular(30.0),
               ),
@@ -193,13 +208,16 @@ class _StateID extends State<Login> {
                     height: 48.0,
                   ),
                   new Container(
+                      margin: EdgeInsets.only(
+                          left: 0.0, right: 35.0, top: 0.0, bottom: 0.0),
                       padding: EdgeInsets.only(
-                          left: 70.0, right: 70.0, top: 15.0, bottom: 15.0),
-                      child: new Text(
+                          left: 65.0, right: 40.0, top: 15.0, bottom: 15.0),
+                      child: Center(
+                          child: Text(
                         "Sign in with Facebook",
                         style: TextStyle(
                             color: Colors.black, fontWeight: FontWeight.bold),
-                      )),
+                      ))),
                 ],
               )),
         ),
