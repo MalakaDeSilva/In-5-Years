@@ -3,9 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:infiveyears/UIs/input_det.dart';
+import 'package:infiveyears/input_det.dart';
 import 'package:infiveyears/animations/fade_out_anim.dart';
-import 'package:infiveyears/UIs/main.dart';
 import 'package:infiveyears/model/personal_det.dart';
 import 'package:intl/intl.dart';
 
