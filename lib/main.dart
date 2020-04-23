@@ -2,10 +2,10 @@ import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:infiveyears/animations/delayed_animation.dart';
-import 'package:infiveyears/UIs/login.dart';
+import 'package:infiveyears/login.dart';
 import 'package:rect_getter/rect_getter.dart';
 
-import '../animations/fade_out_anim.dart';
+import './animations/fade_out_anim.dart';
 
 void main() {
   runApp(MaterialApp(
