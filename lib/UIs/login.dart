@@ -3,9 +3,9 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:infiveyears/home.dart';
+import 'package:infiveyears/UIs/home.dart';
 
-import 'delayed_animation.dart';
+import '../animations/delayed_animation.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:infiveyears/services/auth_services.dart';
@@ -25,6 +25,7 @@ class Login extends StatefulWidget {
 class _StateID extends State<Login> {
   int selected;
   bool passwordVisible;
+
   @override
   void initState() {
     selected = 0;

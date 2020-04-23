@@ -3,6 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:infiveyears/UIs/input_det.dart';
+import 'package:infiveyears/animations/fade_out_anim.dart';
+import 'package:infiveyears/UIs/main.dart';
 import 'package:infiveyears/model/personal_det.dart';
 import 'package:intl/intl.dart';
 
@@ -49,20 +52,24 @@ class _HomeState extends State<Home> {
           Color.fromARGB(255, 74, 0, 224)
         ],
       )),
-      child: StreamBuilder<QuerySnapshot>(
-          stream: firestore.collection("queries").snapshots(),
-          builder:
-              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (!snapshot.hasData) {
-              return SpinKitDoubleBounce(
-                color: Colors.white,
-                size: 90.0,
-              );
-            }
+      child: _buildPages(),
 
-            return _buildQueryList(snapshot);
-          }),
     );
+  }
+
+  Widget _buildPages() {
+    return StreamBuilder<QuerySnapshot>(
+        stream: firestore.collection("queries").snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (!snapshot.hasData) {
+            return SpinKitDoubleBounce(
+              color: Colors.white,
+              size: 90.0,
+            );
+          }
+
+          return _buildQueryList(snapshot);
+        });
   }
 
   Widget _buildQueryList(AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -85,21 +92,26 @@ class _HomeState extends State<Home> {
     PersonalDetails _pdet = PersonalDetails.fromSnapshot(document);
 
     return GestureDetector(
+      onPanUpdate: (details) {
+        if (details.delta.dx > 0) {
+          Navigator.of(context)
+              .push(FadeRouteBuilder(page: InputDetails())); //put the new page
+        }
+      },
       child: AnimatedContainer(
-        duration: Duration(milliseconds: 500),
-        curve: Curves.easeOutQuint,
-        margin: EdgeInsets.only(top: top, bottom: 100, right: 30),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.black87,
-                  blurRadius: blur,
-                  offset: Offset(offset, offset))
-            ]),
-        child: _content(_pdet, document),
-      ),
+          duration: Duration(milliseconds: 200),
+          curve: Curves.easeOutQuint,
+          margin: EdgeInsets.only(top: top, bottom: 100, right: 30),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.black87,
+                    blurRadius: blur,
+                    offset: Offset(offset, offset))
+              ]),
+          child: _content(_pdet, document)),
     );
   }
 
