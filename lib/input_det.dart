@@ -60,170 +60,225 @@ class _InputDetailsState extends State<InputDetails> {
             ),
             margin:
                 EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.15),
-            padding: EdgeInsets.only(left: 20, right: 20, top: 20),
+            padding: EdgeInsets.only(left: 5, right: 5, top: 20),
             child: Form(
               key: _formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  TextFormField(
-                    style: TextStyle(color: Colors.black, fontSize: 20.0),
-                    decoration: new InputDecoration(
-                        border: InputBorder.none,
-                        hintStyle: TextStyle(color: Colors.black),
-                        hintText: "Name",
-                        contentPadding: EdgeInsets.only(bottom: 10)),
-                    onChanged: (value) => _name = value,
+                  Container(
+                    padding: EdgeInsets.only(left: 10, right: 10, top: 5),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.deepPurple),
+                      borderRadius: BorderRadius.all(Radius.circular(20))
+                    ),
+                    child: TextFormField(
+                      style: TextStyle(color: Colors.black, fontSize: 20.0),
+                      decoration: new InputDecoration(
+                          border: InputBorder.none,
+                          hintStyle: TextStyle(color: Colors.black),
+                          hintText: "Name",
+                          contentPadding: EdgeInsets.only(bottom: 10)),
+                      onChanged: (value) => _name = value,
+                    ),
                   ),
-                  InkWell(
-                    onTap: () => _selectDate(context),
-                    child: Text(
-                      dob,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20.0,
+                  Container(
+                    padding: EdgeInsets.only(left: 10, right: 10, top: 15, bottom: 15),
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.deepPurple),
+                      borderRadius: BorderRadius.all(Radius.circular(20))
+                    ),
+                    child: InkWell(
+                      onTap: () => _selectDate(context),
+                      child: Text(
+                        dob,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20.0,
+                        ),
                       ),
                     ),
                   ),
-                  DropdownButton(
-                    hint: Text(
-                      'Gender',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20.0,
-                      ),
+                  Container(
+                    padding: EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.deepPurple),
+                      borderRadius: BorderRadius.all(Radius.circular(20))
                     ),
-                    value: _gender,
-                    onChanged: (newValue) {
-                      setState(() {
-                        _gender = newValue;
-                      });
-                    },
-                    items: ["Male", "Female"].map((location) {
-                      return DropdownMenuItem(
-                        child: new Text(
-                          location,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20.0,
+                    child: DropdownButton(
+                      hint: Text(
+                        'Gender',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20.0,
+                        ),
+                      ),
+                      value: _gender,
+                      onChanged: (newValue) {
+                        setState(() {
+                          _gender = newValue;
+                        });
+                      },
+                      items: ["Male", "Female"].map((location) {
+                        return DropdownMenuItem(
+                          child: new Text(
+                            location,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 20.0,
+                            ),
+                          ),
+                          value: location,
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                  Container(
+                     padding: EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.deepPurple),
+                      borderRadius: BorderRadius.all(Radius.circular(20))
+                    ),
+                    child: DropdownButton(
+                      hint: Text(
+                        'Employment',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20.0,
+                        ),
+                      ),
+                      value: _employment,
+                      onChanged: (newValue) {
+                        setState(() {
+                          _employment = newValue;
+                        });
+                      },
+                      items: ["Employed", "Un-employed"].map((location) {
+                        return DropdownMenuItem(
+                          child: new Text(
+                            location,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 20.0,
+                            ),
+                          ),
+                          value: location,
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                  Container(
+                     padding: EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.deepPurple),
+                      borderRadius: BorderRadius.all(Radius.circular(20))
+                    ),
+                    child: DropdownButton(
+                      hint: Text(
+                        'Civil status',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20.0,
+                        ),
+                      ),
+                      value: _civilstat,
+                      onChanged: (newValue) {
+                        setState(() {
+                          _civilstat = newValue;
+                        });
+                      },
+                      items: ["Married", "Unmarried"].map((location) {
+                        return DropdownMenuItem(
+                          child: new Text(
+                            location,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 20.0,
+                            ),
+                          ),
+                          value: location,
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                  Container(
+                     padding: EdgeInsets.only(left: 10, right: 10, top: 10),
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.deepPurple),
+                      borderRadius: BorderRadius.all(Radius.circular(20))
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          width: MediaQuery.of(context).size.width / 2.25,
+                          child: TextFormField(
+                            style: TextStyle(color: Colors.black, fontSize: 20.0),
+                            decoration: new InputDecoration(
+                                border: InputBorder.none,
+                                hintStyle: TextStyle(color: Colors.black),
+                                hintText: "Height",
+                                contentPadding: EdgeInsets.only(bottom: 10)),
+                            keyboardType: TextInputType.number,
+                            onChanged: (value) => _height = value,
                           ),
                         ),
-                        value: location,
-                      );
-                    }).toList(),
-                  ),
-                  DropdownButton(
-                    hint: Text(
-                      'Employment',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20.0,
-                      ),
-                    ),
-                    value: _employment,
-                    onChanged: (newValue) {
-                      setState(() {
-                        _employment = newValue;
-                      });
-                    },
-                    items: ["Employed", "Un-employed"].map((location) {
-                      return DropdownMenuItem(
-                        child: new Text(
-                          location,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20.0,
+                        Container(
+                          width: MediaQuery.of(context).size.width / 2.15,
+                          child: TextFormField(
+                            style: TextStyle(color: Colors.black, fontSize: 20.0),
+                            decoration: new InputDecoration(
+                                border: InputBorder.none,
+                                hintStyle: TextStyle(color: Colors.black),
+                                hintText: "Weight",
+                                contentPadding: EdgeInsets.only(bottom: 10)),
+                            keyboardType: TextInputType.number,
+                            onChanged: (value) => _weight = value,
                           ),
-                        ),
-                        value: location,
-                      );
-                    }).toList(),
-                  ),
-                  DropdownButton(
-                    hint: Text(
-                      'Civil status',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20.0,
-                      ),
+                        )
+                      ],
                     ),
-                    value: _civilstat,
-                    onChanged: (newValue) {
-                      setState(() {
-                        _civilstat = newValue;
-                      });
-                    },
-                    items: ["Married", "Unmarried"].map((location) {
-                      return DropdownMenuItem(
-                        child: new Text(
-                          location,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20.0,
-                          ),
-                        ),
-                        value: location,
-                      );
-                    }).toList(),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Container(
-                        width: MediaQuery.of(context).size.width / 2.5,
-                        child: TextFormField(
-                          style: TextStyle(color: Colors.black, fontSize: 20.0),
-                          decoration: new InputDecoration(
-                              border: InputBorder.none,
-                              hintStyle: TextStyle(color: Colors.black),
-                              hintText: "Height",
-                              contentPadding: EdgeInsets.only(bottom: 10)),
-                          keyboardType: TextInputType.number,
-                          onChanged: (value) => _height = value,
-                        ),
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width / 2.5,
-                        child: TextFormField(
-                          style: TextStyle(color: Colors.black, fontSize: 20.0),
-                          decoration: new InputDecoration(
-                              border: InputBorder.none,
-                              hintStyle: TextStyle(color: Colors.black),
-                              hintText: "Weight",
-                              contentPadding: EdgeInsets.only(bottom: 10)),
-                          keyboardType: TextInputType.number,
-                          onChanged: (value) => _weight = value,
-                        ),
-                      )
-                    ],
-                  ),
-                  DropdownButton(
-                    hint: Text(
-                      'Use Liquor',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20.0,
-                      ),
+                  Container(
+                     padding: EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.deepPurple),
+                      borderRadius: BorderRadius.all(Radius.circular(20))
                     ),
-                    value: _liquor,
-                    onChanged: (newValue) {
-                      setState(() {
-                        _liquor = newValue;
-                      });
-                    },
-                    items: ["Yes", "No"].map((location) {
-                      return DropdownMenuItem(
-                        child: new Text(
-                          location,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20.0,
-                          ),
+                    child: DropdownButton(
+                      hint: Text(
+                        'Use Liquor',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20.0,
                         ),
-                        value: location,
-                      );
-                    }).toList(),
+                      ),
+                      value: _liquor,
+                      onChanged: (newValue) {
+                        setState(() {
+                          _liquor = newValue;
+                        });
+                      },
+                      items: ["Yes", "No"].map((location) {
+                        return DropdownMenuItem(
+                          child: new Text(
+                            location,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 20.0,
+                            ),
+                          ),
+                          value: location,
+                        );
+                      }).toList(),
+                    ),
                   ),
                   Container(
                     margin: EdgeInsets.only(top: 30),
