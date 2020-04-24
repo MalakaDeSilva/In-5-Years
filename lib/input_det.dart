@@ -15,17 +15,11 @@ class _InputDetailsState extends State<InputDetails> {
   Firestore firestore = Firestore.instance;
   final _formKey = GlobalKey<FormState>();
   DateTime selectedDate = DateTime.now();
-  String _gender,
-      _employment,
-      _civilstat,
-      _liquor,
-      _name,
-      _height,
-      _weight;
+  String _gender, _employment, _civilstat, _liquor, _name, _height, _weight;
+  String dob = "Date of birth";
 
   @override
   void initState() {
-
     super.initState();
   }
 
@@ -66,7 +60,7 @@ class _InputDetailsState extends State<InputDetails> {
             ),
             margin:
                 EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.15),
-            padding: EdgeInsets.only(left: 20, right: 20,top: 20),
+            padding: EdgeInsets.only(left: 20, right: 20, top: 20),
             child: Form(
               key: _formKey,
               child: Column(
@@ -85,7 +79,7 @@ class _InputDetailsState extends State<InputDetails> {
                   InkWell(
                     onTap: () => _selectDate(context),
                     child: Text(
-                      "Date of birth",
+                      dob,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 20.0,
@@ -237,7 +231,8 @@ class _InputDetailsState extends State<InputDetails> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         OutlineButton(
-                          padding: EdgeInsets.only(top: 10, bottom: 10, left: 35, right: 35),
+                          padding: EdgeInsets.only(
+                              top: 10, bottom: 10, left: 35, right: 35),
                           child: Text(
                             'Draft',
                             style: TextStyle(
@@ -248,12 +243,14 @@ class _InputDetailsState extends State<InputDetails> {
                           shape: new RoundedRectangleBorder(
                             borderRadius: new BorderRadius.circular(30.0),
                           ),
-                          borderSide: BorderSide(color: Colors.deepPurpleAccent, width: 2),
+                          borderSide: BorderSide(
+                              color: Colors.deepPurpleAccent, width: 2),
                           onPressed: draft,
                         ),
                         RaisedButton(
                           color: Colors.deepPurpleAccent,
-                          padding: EdgeInsets.only(top: 10, bottom: 10, left: 30, right: 30),
+                          padding: EdgeInsets.only(
+                              top: 10, bottom: 10, left: 30, right: 30),
                           child: Text(
                             'Check',
                             style: TextStyle(
@@ -288,7 +285,5 @@ class _InputDetailsState extends State<InputDetails> {
     }
   }
 
-  void draft(){
-    
-  }
+  void draft() {}
 }
