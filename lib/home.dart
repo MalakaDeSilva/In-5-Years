@@ -51,8 +51,14 @@ class _HomeState extends State<Home> {
           Color.fromARGB(255, 74, 0, 224)
         ],
       )),
-      child: _buildPages(),
-
+      child: GestureDetector(
+          onPanUpdate: (details) {
+            if (details.delta.dx > 0) {
+              Navigator.of(context).push(
+                  FadeRouteBuilder(page: InputDetails())); //put the new page
+            }
+          },
+          child: _buildPages()),
     );
   }
 
