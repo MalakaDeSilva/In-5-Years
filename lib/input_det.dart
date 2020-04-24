@@ -15,8 +15,7 @@ class _InputDetailsState extends State<InputDetails> {
   Firestore firestore = Firestore.instance;
   final _formKey = GlobalKey<FormState>();
   DateTime selectedDate = DateTime.now();
-  String dob,
-      _gender,
+  String _gender,
       _employment,
       _civilstat,
       _liquor,
@@ -26,7 +25,6 @@ class _InputDetailsState extends State<InputDetails> {
 
   @override
   void initState() {
-    dob = "Tap to enter dob";
 
     super.initState();
   }
@@ -67,8 +65,8 @@ class _InputDetailsState extends State<InputDetails> {
               color: Colors.white,
             ),
             margin:
-                EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.2),
-            padding: EdgeInsets.only(left: 20, right: 20),
+                EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.15),
+            padding: EdgeInsets.only(left: 20, right: 20,top: 20),
             child: Form(
               key: _formKey,
               child: Column(
@@ -87,7 +85,7 @@ class _InputDetailsState extends State<InputDetails> {
                   InkWell(
                     onTap: () => _selectDate(context),
                     child: Text(
-                      dob,
+                      "Date of birth",
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 20.0,
