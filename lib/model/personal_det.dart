@@ -6,8 +6,10 @@ class PersonalDetails {
   Timestamp date;
   String civilstatus;
   String gender;
-  bool employement;
+  String employement;
   DocumentReference reference;
+
+  PersonalDetails();
 
   PersonalDetails.fromMap(Map snapshot, {this.reference})
       : name = snapshot['name'],
@@ -19,4 +21,27 @@ class PersonalDetails {
 
   PersonalDetails.fromSnapshot(DocumentSnapshot snapshot)
       : this.fromMap(snapshot.data, reference: snapshot.reference);
+
+  toJson(
+    String name,
+    Timestamp dob,
+    String civilstatus,
+    String gender,
+    String employement,
+    double height,
+    double weight,
+    String liquor,
+  ) {
+    return {
+      "name": name,
+      "dob": dob,
+      "civilstatus": civilstatus,
+      "employment": employement,
+      "gender": gender,
+      "height": height,
+      "weight": weight,
+      "liquor": liquor,
+      "date": DateTime.now()
+    };
+  }
 }
