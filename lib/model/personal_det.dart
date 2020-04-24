@@ -6,6 +6,9 @@ class PersonalDetails {
   Timestamp date;
   String civilstatus;
   String gender;
+  double height;
+  double weight;
+  String liquor;
   String employement;
   DocumentReference reference;
 
@@ -17,6 +20,9 @@ class PersonalDetails {
         date = snapshot['date'],
         civilstatus = snapshot["civilstatus"],
         gender = snapshot["gender"],
+        height = snapshot["height"],
+        weight = snapshot["weight"],
+        liquor = snapshot["liquor"],
         employement = snapshot["employment"];
 
   PersonalDetails.fromSnapshot(DocumentSnapshot snapshot)

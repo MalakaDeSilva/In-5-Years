@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:infiveyears/edit_det.dart';
 import 'package:infiveyears/input_det.dart';
 import 'package:infiveyears/animations/fade_out_anim.dart';
 import 'package:infiveyears/model/personal_det.dart';
@@ -72,7 +73,7 @@ class _HomeState extends State<Home> {
               size: 90.0,
             );
           }
-
+          
           return _buildQueryList(snapshot);
         });
   }
@@ -291,6 +292,13 @@ class _HomeState extends State<Home> {
                     padding: EdgeInsets.only(
                         left: 10, bottom: 10, right: 10, top: 5),
                     child: Icon(Icons.edit)),
+                onTap: () {
+                  Navigator.of(context).push(FadeRouteBuilder(
+                      page: EditDetails(
+                    pdet: _pdet,
+                    ref: documentSnapshot.documentID.toString(),
+                  )));
+                },
               ),
             ),
           ],
