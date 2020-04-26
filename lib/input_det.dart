@@ -385,7 +385,7 @@ class _InputDetailsState extends State<InputDetails> {
   }
 
   void draft() {
-    // Navigator.push(context, MaterialPageRoute(builder: (context) => Draft()));
+    //Navigator.push(context, MaterialPageRoute(builder: (context) => Draft()));
     createTodos();
     showAlertDialog(context, 'Record Saved in the Draft?', "$_name", "Ok");
   }
@@ -395,7 +395,7 @@ class _InputDetailsState extends State<InputDetails> {
         Firestore.instance.collection("drafts").document(_name);
 
     //Map
-    Map<String, String> todos = {"_Name": _name};
+    Map<String, String> todos = {"Name_": _name};
 
     documentReference.setData(todos).whenComplete(() {
       print("$_name created");
