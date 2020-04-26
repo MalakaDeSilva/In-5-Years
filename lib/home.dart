@@ -59,21 +59,29 @@ class _HomeState extends State<Home> {
         )),
         child: Column(children: <Widget>[
           Container(
+            width: 160,
             margin: EdgeInsets.only(top: 50, left: 0),
             child: OutlineButton(
               padding:
                   EdgeInsets.only(top: 10, bottom: 10, left: 35, right: 35),
-              child: Text(
-                'Drafts',
-                style: TextStyle(
-                  fontSize: 20.0,
-                  color: Colors.white70,
+              child: Row(children: <Widget>[
+                Text(
+                  'Drafts',
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    color: Colors.white70,
+                  ),
                 ),
-              ),
+                const SizedBox(width: 8.0),
+                Icon(
+                  Icons.save,
+                  color: Colors.white38,
+                ),
+              ]),
               shape: new RoundedRectangleBorder(
                 borderRadius: new BorderRadius.circular(10.0),
               ),
-              borderSide: BorderSide(color: Colors.white30, width: 6),
+              borderSide: BorderSide(color: Colors.white30, width: 3),
               onPressed: _showDraft,
             ),
           ),
