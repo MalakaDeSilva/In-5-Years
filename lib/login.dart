@@ -159,11 +159,13 @@ class _StateID extends State<Login> {
               color: Colors.white,
               onPressed: () async {
                 bool res = await authHandler.loginWithGoogle();
+
+                print(authHandler.getUser());
                 if (!res) {
                   print("error logging in with google");
                 } else {
                   Navigator.push(context,
-                      new MaterialPageRoute(builder: (context) => new Home()));
+                      new MaterialPageRoute(builder: (context) => new Home(userId: authHandler.getUser().uid,)));
                 }
               },
               shape: new RoundedRectangleBorder(
@@ -194,11 +196,12 @@ class _StateID extends State<Login> {
               color: Colors.white,
               onPressed: () async {
                 bool res = await authHandler.facebookSignedIn();
+
                 if (!res) {
                   print("error logging in with facebook");
                 } else {
                   Navigator.push(context,
-                      new MaterialPageRoute(builder: (context) => new Home()));
+                      new MaterialPageRoute(builder: (context) => new Home(userId: authHandler.getUser().uid,)));
                 }
               },
               shape: new RoundedRectangleBorder(

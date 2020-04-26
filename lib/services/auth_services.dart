@@ -6,6 +6,8 @@ final FirebaseAuth auth = FirebaseAuth.instance;
 final FacebookLogin _facebookLogin = new FacebookLogin();
 
 class Auth {
+  FirebaseUser _user;
+
   Future<FirebaseUser> handleSignInEmail(String email, String password) async {
     AuthResult result =
         await auth.signInWithEmailAndPassword(email: email, password: password);
@@ -44,6 +46,8 @@ class Auth {
         accessToken: (await account.authentication).accessToken,
       ));
       if (res.user == null) return false;
+      _user = res.user;
+
       return true;
     } catch (e) {
       print(e.message);
@@ -65,7 +69,12 @@ class Auth {
     if (fbUser.uid == null) {
       return false;
     } else {
+      _user = fbUser;
       return true;
     }
+  }
+
+  FirebaseUser getUser(){
+    return _user;
   }
 }
