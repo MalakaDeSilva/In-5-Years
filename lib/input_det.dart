@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:infiveyears/animations/delayed_animation.dart';
+import 'package:infiveyears/drafts.dart';
 import 'package:infiveyears/model/personal_det.dart';
 import 'package:intl/intl.dart';
 
@@ -338,17 +339,26 @@ class _InputDetailsState extends State<InputDetails> {
     if (_formKey.currentState.validate()) {
       PersonalDetails pd = new PersonalDetails();
       Timestamp time = Timestamp.fromDate(selectedDate);
-      await firestore.collection("users").document(widget.userId).collection("queries").add(pd.toJson(
-          _name,
-          time,
-          _civilstat,
-          _gender,
-          _employment,
-          double.parse(_height),
-          double.parse(_weight),
-          _liquor)); //Returns the DocumentReference
+      await firestore
+          .collection("users")
+          .document(widget.userId)
+          .collection("queries")
+          .add(pd.toJson(
+              _name,
+              time,
+              _civilstat,
+              _gender,
+              _employment,
+              double.parse(_height),
+              double.parse(_weight),
+              _liquor)); //Returns the DocumentReference
     }
   }
 
-  void draft() {}
+  void draft() {
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => Draft()),
+        ModalRoute.withName("/Draft"));
+  }
 }
