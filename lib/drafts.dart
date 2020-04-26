@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:infiveyears/home.dart';
 
 void main() => runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
