@@ -143,8 +143,12 @@ class _StateID extends State<Login> {
                 .handleSignInEmail(
                     _emailIdController.text, _passwordController.text)
                 .then((FirebaseUser user) {
-              Navigator.push(context,
-                  new MaterialPageRoute(builder: (context) => new Home()));
+              Navigator.push(
+                  context,
+                  new MaterialPageRoute(
+                      builder: (context) => new Home(
+                            userId: user.uid,
+                          )));
             }).catchError((e) => print(e));
           },
         ),
