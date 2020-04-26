@@ -355,32 +355,42 @@ class _InputDetailsState extends State<InputDetails> {
     }
   }
 
+  showAlertDialog(BuildContext context, String message, String heading,
+      String buttonAcceptTitle) {
+    // set up the buttons
+
+    Widget continueButton = FlatButton(
+      child: Text(buttonAcceptTitle),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text(heading),
+      content: Text(message),
+      actions: [
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   void draft() {
     // Navigator.push(context, MaterialPageRoute(builder: (context) => Draft()));
     createTodos();
+    showAlertDialog(context, 'Record Saved in the Draft?', "$_name", "Ok");
   }
 
   createTodos() {
-    Future<void> _ackAlert(BuildContext context) {
-      return showDialog<void>(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Not in stock'),
-            content: const Text('This item is no longer available'),
-            actions: <Widget>[
-              FlatButton(
-                child: Text('Ok'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        },
-      );
-    }
-
     DocumentReference documentReference =
         Firestore.instance.collection("drafts").document(_name);
 
