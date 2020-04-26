@@ -356,6 +356,39 @@ class _InputDetailsState extends State<InputDetails> {
   }
 
   void draft() {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => Draft()));
+    // Navigator.push(context, MaterialPageRoute(builder: (context) => Draft()));
+    createTodos();
+  }
+
+  createTodos() {
+    Future<void> _ackAlert(BuildContext context) {
+      return showDialog<void>(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Not in stock'),
+            content: const Text('This item is no longer available'),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Ok'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
+    DocumentReference documentReference =
+        Firestore.instance.collection("drafts").document(_name);
+
+    //Map
+    Map<String, String> todos = {"_Name": _name};
+
+    documentReference.setData(todos).whenComplete(() {
+      print("$_name created");
+    });
   }
 }
