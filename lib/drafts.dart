@@ -49,7 +49,7 @@ class _DraftState extends State<Draft> {
           Navigator.of(context).pop();
         },
         child: Icon(
-          Icons.add,
+          Icons.arrow_back,
           color: Colors.white,
         ),
       ),
