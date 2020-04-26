@@ -356,9 +356,6 @@ class _InputDetailsState extends State<InputDetails> {
   }
 
   void draft() {
-    Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => Draft()),
-        ModalRoute.withName("/Draft"));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => Draft()));
   }
 }
