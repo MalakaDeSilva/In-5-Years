@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:infiveyears/animations/delayed_animation.dart';
-import 'package:infiveyears/drafts.dart';
+
 import 'package:infiveyears/model/personal_det.dart';
 import 'package:intl/intl.dart';
 
@@ -385,7 +385,6 @@ class _InputDetailsState extends State<InputDetails> {
   }
 
   void draft() {
-    //Navigator.push(context, MaterialPageRoute(builder: (context) => Draft()));
     createTodos();
     showAlertDialog(context, 'Record Saved in the Draft?', "$_name", "Ok");
   }

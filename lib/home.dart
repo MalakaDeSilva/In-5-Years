@@ -8,6 +8,7 @@ import 'package:infiveyears/input_det.dart';
 import 'package:infiveyears/animations/fade_out_anim.dart';
 import 'package:infiveyears/model/personal_det.dart';
 import 'package:intl/intl.dart';
+import 'package:infiveyears/drafts.dart';
 
 class Home extends StatefulWidget {
   final String userId;
@@ -47,26 +48,48 @@ class _HomeState extends State<Home> {
     _context = context;
 
     return Container(
-      decoration: new BoxDecoration(
-          gradient: new LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        colors: [
-          Color.fromARGB(255, 142, 45, 226),
-          Color.fromARGB(255, 74, 0, 224)
-        ],
-      )),
-      child: GestureDetector(
-          onPanUpdate: (details) {
-            if (details.delta.dx > 0) {
-              Navigator.of(context).push(FadeRouteBuilder(
-                  page: InputDetails(
-                userId: widget.userId,
-              ))); //put the new page
-            }
-          },
-          child: _buildPages()),
-    );
+        decoration: new BoxDecoration(
+            gradient: new LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Color.fromARGB(255, 142, 45, 226),
+            Color.fromARGB(255, 74, 0, 224)
+          ],
+        )),
+        child: Column(children: <Widget>[
+          Container(
+            margin: EdgeInsets.only(top: 50, left: 0),
+            child: OutlineButton(
+              padding:
+                  EdgeInsets.only(top: 10, bottom: 10, left: 35, right: 35),
+              child: Text(
+                'Drafts',
+                style: TextStyle(
+                  fontSize: 20.0,
+                  color: Colors.white70,
+                ),
+              ),
+              shape: new RoundedRectangleBorder(
+                borderRadius: new BorderRadius.circular(10.0),
+              ),
+              borderSide: BorderSide(color: Colors.white30, width: 6),
+              onPressed: _showDraft,
+            ),
+          ),
+          Expanded(
+            child: GestureDetector(
+                onPanUpdate: (details) {
+                  if (details.delta.dx > 0) {
+                    Navigator.of(context).push(FadeRouteBuilder(
+                        page: InputDetails(
+                      userId: widget.userId,
+                    ))); //put the new page
+                  }
+                },
+                child: _buildPages()),
+          )
+        ]));
   }
 
   Widget _buildPages() {
@@ -104,7 +127,7 @@ class _HomeState extends State<Home> {
   Widget _buildPage(bool active, DocumentSnapshot document) {
     final double blur = active ? 30 : 0;
     final double offset = active ? 20 : 0;
-    final double top = active ? 150 : 300;
+    final double top = active ? 70 : 200;
     PersonalDetails _pdet = PersonalDetails.fromSnapshot(document);
 
     return GestureDetector(
@@ -317,5 +340,9 @@ class _HomeState extends State<Home> {
         )
       ],
     );
+  }
+
+  void _showDraft() {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => Draft()));
   }
 }
