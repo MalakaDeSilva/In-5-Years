@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:infiveyears/animations/delayed_animation.dart';
+
 import 'package:infiveyears/model/personal_det.dart';
 import 'package:intl/intl.dart';
 
@@ -338,17 +339,65 @@ class _InputDetailsState extends State<InputDetails> {
     if (_formKey.currentState.validate()) {
       PersonalDetails pd = new PersonalDetails();
       Timestamp time = Timestamp.fromDate(selectedDate);
-      await firestore.collection("users").document(widget.userId).collection("queries").add(pd.toJson(
-          _name,
-          time,
-          _civilstat,
-          _gender,
-          _employment,
-          double.parse(_height),
-          double.parse(_weight),
-          _liquor)); //Returns the DocumentReference
+      await firestore
+          .collection("users")
+          .document(widget.userId)
+          .collection("queries")
+          .add(pd.toJson(
+              _name,
+              time,
+              _civilstat,
+              _gender,
+              _employment,
+              double.parse(_height),
+              double.parse(_weight),
+              _liquor)); //Returns the DocumentReference
     }
   }
 
-  void draft() {}
+  showAlertDialog(BuildContext context, String message, String heading,
+      String buttonAcceptTitle) {
+    // set up the buttons
+
+    Widget continueButton = FlatButton(
+      child: Text(buttonAcceptTitle),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text(heading),
+      content: Text(message),
+      actions: [
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  void draft() {
+    createTodos();
+    showAlertDialog(context, 'Record Saved in the Draft?', "$_name", "Ok");
+  }
+
+  createTodos() {
+    DocumentReference documentReference =
+        Firestore.instance.collection("drafts").document(_name);
+
+    //Map
+    Map<String, String> todos = {"Name_": _name};
+
+    documentReference.setData(todos).whenComplete(() {
+      print("$_name created");
+    });
+  }
 }
