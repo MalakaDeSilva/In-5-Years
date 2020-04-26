@@ -10,6 +10,10 @@ import 'package:infiveyears/model/personal_det.dart';
 import 'package:intl/intl.dart';
 
 class Home extends StatefulWidget {
+  final String userId;
+
+  Home({this.userId});
+
   @override
   _HomeState createState() => _HomeState();
 }
@@ -55,8 +59,10 @@ class _HomeState extends State<Home> {
       child: GestureDetector(
           onPanUpdate: (details) {
             if (details.delta.dx > 0) {
-              Navigator.of(context).push(
-                  FadeRouteBuilder(page: InputDetails())); //put the new page
+              Navigator.of(context).push(FadeRouteBuilder(
+                  page: InputDetails(
+                userId: widget.userId,
+              ))); //put the new page
             }
           },
           child: _buildPages()),
@@ -65,7 +71,11 @@ class _HomeState extends State<Home> {
 
   Widget _buildPages() {
     return StreamBuilder<QuerySnapshot>(
-        stream: firestore.collection("queries").snapshots(),
+        stream: firestore
+            .collection("users")
+            .document(widget.userId)
+            .collection("queries")
+            .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
             return SpinKitDoubleBounce(
@@ -73,7 +83,7 @@ class _HomeState extends State<Home> {
               size: 90.0,
             );
           }
-          
+
           return _buildQueryList(snapshot);
         });
   }
@@ -123,6 +133,8 @@ class _HomeState extends State<Home> {
 
   void _delete(DocumentSnapshot documentSnapshot) {
     firestore
+        .collection("users")
+        .document(widget.userId)
         .collection("queries")
         .document(documentSnapshot.reference.documentID)
         .delete();

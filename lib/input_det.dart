@@ -6,6 +6,10 @@ import 'package:infiveyears/model/personal_det.dart';
 import 'package:intl/intl.dart';
 
 class InputDetails extends StatefulWidget {
+  final String userId;
+
+  InputDetails({this.userId});
+
   @override
   _InputDetailsState createState() => _InputDetailsState();
 }
@@ -334,7 +338,7 @@ class _InputDetailsState extends State<InputDetails> {
     if (_formKey.currentState.validate()) {
       PersonalDetails pd = new PersonalDetails();
       Timestamp time = Timestamp.fromDate(selectedDate);
-      await firestore.collection("queries").add(pd.toJson(
+      await firestore.collection("users").document(widget.userId).collection("queries").add(pd.toJson(
           _name,
           time,
           _civilstat,
