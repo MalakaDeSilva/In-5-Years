@@ -1,29 +1,39 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:infiveyears/animations/delayed_animation.dart';
 import 'package:infiveyears/model/personal_det.dart';
 import 'package:intl/intl.dart';
 
-class InputDetails extends StatefulWidget {
-  final String userId;
+import 'animations/delayed_animation.dart';
 
-  InputDetails({this.userId});
+class EditDetails extends StatefulWidget {
+  final PersonalDetails pdet;
+  final String ref;
+
+  EditDetails({this.pdet, this.ref});
 
   @override
-  _InputDetailsState createState() => _InputDetailsState();
+  _EditDetailsState createState() => _EditDetailsState();
 }
 
-class _InputDetailsState extends State<InputDetails> {
+class _EditDetailsState extends State<EditDetails> {
   DateFormat df = new DateFormat("d / MMMM / y");
+  DateTime selectedDate = DateTime.now();
   Firestore firestore = Firestore.instance;
   final _formKey = GlobalKey<FormState>();
-  DateTime selectedDate = DateTime.now();
   String _gender, _employment, _civilstat, _liquor, _name, _height, _weight;
   String dob = "Date of birth";
 
   @override
   void initState() {
+    _name = widget.pdet.name;
+    dob = df.format(widget.pdet.date.toDate());
+    _height = widget.pdet.height.toString();
+    _weight = widget.pdet.weight.toString();
+    _civilstat = widget.pdet.civilstatus;
+    _liquor = widget.pdet.liquor;
+    _gender = widget.pdet.gender;
+    _employment = widget.pdet.employement;
+
     super.initState();
   }
 
@@ -84,6 +94,7 @@ class _InputDetailsState extends State<InputDetails> {
                           hintText: "Name",
                           contentPadding: EdgeInsets.only(bottom: 10)),
                       onChanged: (value) => _name = value,
+                      initialValue: _name,
                     ),
                   ),
                   Container(
@@ -230,6 +241,7 @@ class _InputDetailsState extends State<InputDetails> {
                                 contentPadding: EdgeInsets.only(bottom: 10)),
                             keyboardType: TextInputType.number,
                             onChanged: (value) => _height = value,
+                            initialValue: _height,
                           ),
                         ),
                         Container(
@@ -244,6 +256,7 @@ class _InputDetailsState extends State<InputDetails> {
                                 contentPadding: EdgeInsets.only(bottom: 10)),
                             keyboardType: TextInputType.number,
                             onChanged: (value) => _weight = value,
+                            initialValue: _weight,
                           ),
                         )
                       ],
@@ -293,7 +306,7 @@ class _InputDetailsState extends State<InputDetails> {
                           padding: EdgeInsets.only(
                               top: 10, bottom: 10, left: 35, right: 35),
                           child: Text(
-                            'Draft',
+                            'Cancel',
                             style: TextStyle(
                               fontSize: 23.0,
                               color: Colors.deepPurpleAccent,
@@ -304,14 +317,16 @@ class _InputDetailsState extends State<InputDetails> {
                           ),
                           borderSide: BorderSide(
                               color: Colors.deepPurpleAccent, width: 2),
-                          onPressed: draft,
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
                         ),
                         RaisedButton(
                           color: Colors.deepPurpleAccent,
                           padding: EdgeInsets.only(
-                              top: 12, bottom: 12, left: 30, right: 30),
+                              top: 12, bottom: 12, left: 45, right: 45),
                           child: Text(
-                            'Check',
+                            'Done',
                             style: TextStyle(
                               fontSize: 23.0,
                               color: Colors.white,
@@ -320,7 +335,7 @@ class _InputDetailsState extends State<InputDetails> {
                           shape: new RoundedRectangleBorder(
                             borderRadius: new BorderRadius.circular(30.0),
                           ),
-                          onPressed: create,
+                          onPressed: update,
                         ),
                       ],
                     ),
@@ -334,21 +349,20 @@ class _InputDetailsState extends State<InputDetails> {
     );
   }
 
-  void create() async {
-    if (_formKey.currentState.validate()) {
-      PersonalDetails pd = new PersonalDetails();
-      Timestamp time = Timestamp.fromDate(selectedDate);
-      await firestore.collection("users").document(widget.userId).collection("queries").add(pd.toJson(
-          _name,
-          time,
-          _civilstat,
-          _gender,
-          _employment,
-          double.parse(_height),
-          double.parse(_weight),
-          _liquor)); //Returns the DocumentReference
-    }
-  }
+  void update() {
+    PersonalDetails pd = new PersonalDetails();
+    Timestamp time = Timestamp.fromDate(selectedDate);
 
-  void draft() {}
+    firestore.collection("queries").document(widget.ref).updateData(pd.toJson(
+        _name,
+        time,
+        _civilstat,
+        _gender,
+        _employment,
+        double.parse(_height),
+        double.parse(_weight),
+        _liquor));
+
+    Navigator.of(context).pop();
+  }
 }

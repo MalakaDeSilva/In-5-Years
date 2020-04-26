@@ -3,12 +3,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:infiveyears/edit_det.dart';
 import 'package:infiveyears/input_det.dart';
 import 'package:infiveyears/animations/fade_out_anim.dart';
 import 'package:infiveyears/model/personal_det.dart';
 import 'package:intl/intl.dart';
 
 class Home extends StatefulWidget {
+  final String userId;
+
+  Home({this.userId});
+
   @override
   _HomeState createState() => _HomeState();
 }
@@ -54,8 +59,10 @@ class _HomeState extends State<Home> {
       child: GestureDetector(
           onPanUpdate: (details) {
             if (details.delta.dx > 0) {
-              Navigator.of(context).push(
-                  FadeRouteBuilder(page: InputDetails())); //put the new page
+              Navigator.of(context).push(FadeRouteBuilder(
+                  page: InputDetails(
+                userId: widget.userId,
+              ))); //put the new page
             }
           },
           child: _buildPages()),
@@ -64,7 +71,11 @@ class _HomeState extends State<Home> {
 
   Widget _buildPages() {
     return StreamBuilder<QuerySnapshot>(
-        stream: firestore.collection("queries").snapshots(),
+        stream: firestore
+            .collection("users")
+            .document(widget.userId)
+            .collection("queries")
+            .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
             return SpinKitDoubleBounce(
@@ -122,6 +133,8 @@ class _HomeState extends State<Home> {
 
   void _delete(DocumentSnapshot documentSnapshot) {
     firestore
+        .collection("users")
+        .document(widget.userId)
         .collection("queries")
         .document(documentSnapshot.reference.documentID)
         .delete();
@@ -291,6 +304,13 @@ class _HomeState extends State<Home> {
                     padding: EdgeInsets.only(
                         left: 10, bottom: 10, right: 10, top: 5),
                     child: Icon(Icons.edit)),
+                onTap: () {
+                  Navigator.of(context).push(FadeRouteBuilder(
+                      page: EditDetails(
+                    pdet: _pdet,
+                    ref: documentSnapshot.documentID.toString(),
+                  )));
+                },
               ),
             ),
           ],
