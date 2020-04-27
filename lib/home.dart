@@ -126,7 +126,16 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
-                        
+                        Transform.translate(
+                          offset: Offset(0, animation.value),
+                          child: Container(
+                            child: Image(
+                              image: AssetImage("images/swipe-up.png"),
+                              width: 60,
+                              fit: BoxFit.scaleDown,
+                            ),
+                          ),
+                        ),
                         Container(
                             padding: EdgeInsets.only(bottom: 10),
                             child: Text(
