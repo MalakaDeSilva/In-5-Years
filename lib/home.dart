@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -19,10 +20,11 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   final Firestore firestore = Firestore.instance;
   BuildContext _context;
-
+  Animation<double> animation;
+  AnimationController animationController;
   PageController _controller = PageController(
     initialPage: 0,
     viewportFraction: 0.8,
@@ -40,64 +42,117 @@ class _HomeState extends State<Home> {
         });
       }
     });
+
+    animationController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 700));
+
+    animation = Tween<double>(begin: 0, end: -20).animate(animationController)
+      ..addListener(() {
+        setState(() {});
+      });
+    animationController.forward();
+    animation.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        animationController.repeat();
+      }
+    });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    animationController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     _context = context;
-
-    return Container(
-        decoration: new BoxDecoration(
-            gradient: new LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Color.fromARGB(255, 142, 45, 226),
-            Color.fromARGB(255, 74, 0, 224)
-          ],
-        )),
-        child: Column(children: <Widget>[
-          Container(
-            width: 160,
-            margin: EdgeInsets.only(top: 50, left: 0),
-            child: OutlineButton(
-              padding:
-                  EdgeInsets.only(top: 10, bottom: 10, left: 35, right: 35),
-              child: Row(children: <Widget>[
-                Text(
-                  'Drafts',
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    color: Colors.white70,
+    return Material(
+      child: Container(
+          decoration: new BoxDecoration(
+              gradient: new LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color.fromARGB(255, 142, 45, 226),
+              Color.fromARGB(255, 74, 0, 224)
+            ],
+          )),
+          child: Column(children: <Widget>[
+            Container(
+              width: 160,
+              margin: EdgeInsets.only(top: 50, left: 0),
+              child: OutlineButton(
+                padding:
+                    EdgeInsets.only(top: 10, bottom: 10, left: 35, right: 35),
+                child: Row(children: <Widget>[
+                  Text(
+                    'Drafts',
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.white70,
+                    ),
                   ),
+                  const SizedBox(width: 8.0),
+                  Icon(
+                    Icons.save,
+                    color: Colors.white38,
+                  ),
+                ]),
+                shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(10.0),
                 ),
-                const SizedBox(width: 8.0),
-                Icon(
-                  Icons.save,
-                  color: Colors.white38,
-                ),
-              ]),
-              shape: new RoundedRectangleBorder(
-                borderRadius: new BorderRadius.circular(10.0),
+                borderSide: BorderSide(color: Colors.white30, width: 3),
+                onPressed: _showDraft,
               ),
-              borderSide: BorderSide(color: Colors.white30, width: 3),
-              onPressed: _showDraft,
             ),
-          ),
-          Expanded(
-            child: GestureDetector(
-                onPanUpdate: (details) {
-                  if (details.delta.dx > 0) {
-                    Navigator.of(context).push(FadeRouteBuilder(
-                        page: InputDetails(
-                      userId: widget.userId,
-                    ))); //put the new page
-                  }
-                },
-                child: _buildPages()),
-          )
-        ]));
+            Expanded(
+                child: GestureDetector(
+              onPanUpdate: (details) {
+                if (details.delta.dx > 0) {
+                  Navigator.of(context).push(FadeRouteBuilder(
+                      page: InputDetails(
+                    userId: widget.userId,
+                  ))); //put the new page
+                }
+              },
+              child: Column(
+                children: <Widget>[
+                  Expanded(child: _buildPages()),
+                  Opacity(
+                    opacity: 0.6,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Transform.translate(
+                          offset: Offset(0, animation.value),
+                          child: Container(
+                            child: Image(
+                              image: AssetImage("images/swipe-up.png"),
+                              width: 60,
+                              fit: BoxFit.scaleDown,
+                            ),
+                          ),
+                        ),
+                        Container(
+                            padding: EdgeInsets.only(bottom: 10),
+                            child: Text(
+                              "Swipe up to add",
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.white,
+                                  fontFamily: "Traffolight"),
+                            ))
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            )),
+          ])),
+    );
   }
 
   Widget _buildPages() {
@@ -148,7 +203,7 @@ class _HomeState extends State<Home> {
       child: AnimatedContainer(
           duration: Duration(milliseconds: 200),
           curve: Curves.easeOutQuint,
-          margin: EdgeInsets.only(top: top, bottom: 100, right: 30),
+          margin: EdgeInsets.only(top: top, bottom: 50, right: 30),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
               color: Colors.white,
