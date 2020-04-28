@@ -339,19 +339,13 @@ class _InputDetailsState extends State<InputDetails> {
     if (_formKey.currentState.validate()) {
       PersonalDetails pd = new PersonalDetails();
       Timestamp time = Timestamp.fromDate(selectedDate);
+      pd.setValues(_name, time, _civilstat, _gender, double.parse(_height),
+          double.parse(_weight), _liquor, _employment);
       await firestore
           .collection("users")
           .document(widget.userId)
           .collection("queries")
-          .add(pd.toJson(
-              _name,
-              time,
-              _civilstat,
-              _gender,
-              _employment,
-              double.parse(_height),
-              double.parse(_weight),
-              _liquor)); //Returns the DocumentReference
+          .add(pd.toJson()); //Returns the DocumentReference
     }
   }
 
