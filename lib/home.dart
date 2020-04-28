@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -395,6 +394,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       page: EditDetails(
                     pdet: _pdet,
                     ref: documentSnapshot.documentID.toString(),
+                    userId: widget.userId,
                   )));
                 },
               ),
