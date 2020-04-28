@@ -2,8 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:infiveyears/animations/delayed_animation.dart';
+import 'package:infiveyears/animations/fade_out_anim.dart';
 
 import 'package:infiveyears/model/personal_det.dart';
+import 'package:infiveyears/problem_list.dart';
 import 'package:intl/intl.dart';
 
 class InputDetails extends StatefulWidget {
@@ -32,7 +34,7 @@ class _InputDetailsState extends State<InputDetails> {
     final DateTime picked = await showDatePicker(
         context: context,
         initialDate: selectedDate,
-        firstDate: DateTime(2015, 8),
+        firstDate: DateTime(1900, 1),
         lastDate: DateTime(2101));
 
     if (picked != null && picked != selectedDate)
@@ -346,6 +348,8 @@ class _InputDetailsState extends State<InputDetails> {
           .document(widget.userId)
           .collection("queries")
           .add(pd.toJson()); //Returns the DocumentReference
+
+      Navigator.of(context).push(FadeRouteBuilder(page: ProblemsPage(pdet: pd,)));
     }
   }
 
