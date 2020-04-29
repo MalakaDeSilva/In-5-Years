@@ -195,7 +195,11 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).push(FadeRouteBuilder(page: ProblemsPage(pdet: _pdet,)));
+        Navigator.of(context).push(FadeRouteBuilder(
+            page: ProblemsPage(
+          pdet: _pdet,
+          userId: widget.userId,
+        )));
       },
       child: AnimatedContainer(
           duration: Duration(milliseconds: 200),
@@ -406,5 +410,4 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   void _showDraft() {
     Navigator.push(context, MaterialPageRoute(builder: (context) => Draft()));
   }
-  
 }

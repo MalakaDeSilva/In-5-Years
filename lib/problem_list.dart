@@ -1,12 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:infiveyears/home.dart';
 import 'package:infiveyears/model/personal_det.dart';
+import 'package:infiveyears/services/bmi_calc.dart';
 
 class ProblemsPage extends StatefulWidget {
   final PersonalDetails pdet;
+  final String userId;
 
-  ProblemsPage({this.pdet});
+  ProblemsPage({this.pdet, this.userId});
 
   @override
   _ProblemsState createState() => _ProblemsState();
@@ -15,7 +18,7 @@ class ProblemsPage extends StatefulWidget {
 class _ProblemsState extends State<ProblemsPage> {
   CollectionReference problem = Firestore.instance.collection("problmes");
   DocumentReference docRef;
-  List<String> _list;
+  BMICalculator bmiCalculator = new BMICalculator();
 
   @override
   void initState() {
@@ -24,55 +27,61 @@ class _ProblemsState extends State<ProblemsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Container(
-          decoration: new BoxDecoration(
-              gradient: new LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color.fromARGB(255, 142, 45, 226),
-              Color.fromARGB(255, 74, 0, 224)
-            ],
-          )),
-          child: Container(
-            margin: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height * 0.15,
-                bottom: MediaQuery.of(context).size.height * 0.15),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: Colors.white,
-            ),
-            child: FutureBuilder(
-                future: getList(),
-                builder: (context, AsyncSnapshot<List> snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    return ListView.builder(itemBuilder: (context, index) {
-                      try {
-                        return Container(
-                          margin: EdgeInsets.only(left: 10, right: 10),
-                          padding: EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.deepPurple),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20))),
-                          child: Text(
-                            snapshot.data[index],
-                            style: TextStyle(fontSize: 25),
-                          ),
-                        );
-                      } catch (e) {
-                        return null;
-                      }
-                    });
-                  } else {
-                    return SpinKitDoubleBounce(
-                      color: Colors.deepPurple,
-                      size: 90.0,
-                    );
-                  }
-                }),
-          )),
+    print(widget.userId);
+
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Material(
+        child: Container(
+            decoration: new BoxDecoration(
+                gradient: new LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color.fromARGB(255, 142, 45, 226),
+                Color.fromARGB(255, 74, 0, 224)
+              ],
+            )),
+            child: Container(
+              margin: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.height * 0.15,
+                  bottom: MediaQuery.of(context).size.height * 0.15),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.white,
+              ),
+              child: FutureBuilder(
+                  future: getList(),
+                  builder: (context, AsyncSnapshot<List> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      return ListView.builder(itemBuilder: (context, index) {
+                        try {
+                          return Container(
+                            margin: EdgeInsets.only(
+                                left: 10, right: 10, bottom: 10),
+                            padding: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.deepPurple),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20))),
+                            child: Text(
+                              snapshot.data[index],
+                              style: TextStyle(fontSize: 25),
+                            ),
+                          );
+                        } catch (e) {
+                          return null;
+                        }
+                      });
+                    } else {
+                      return SpinKitDoubleBounce(
+                        color: Colors.deepPurple,
+                        size: 90.0,
+                      );
+                    }
+                  }),
+            )),
+      ),
     );
   }
 
@@ -142,6 +151,9 @@ class _ProblemsState extends State<ProblemsPage> {
         }
       });
     }
+
+    problemsList.add(bmiCalculator.getStatus(pd.weight, pd.height));
+
     return problemsList;
   }
 
@@ -160,5 +172,12 @@ class _ProblemsState extends State<ProblemsPage> {
       }
     }
     return age;
+  }
+
+  Future<bool> _onWillPop() async {
+    return Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => Home(
+              userId: widget.userId,
+            )));
   }
 }

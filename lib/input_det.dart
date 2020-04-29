@@ -349,14 +349,15 @@ class _InputDetailsState extends State<InputDetails> {
           .collection("queries")
           .add(pd.toJson()); //Returns the DocumentReference
 
-      Navigator.of(context).push(FadeRouteBuilder(page: ProblemsPage(pdet: pd,)));
+      Navigator.of(context).push(FadeRouteBuilder(
+          page: ProblemsPage(
+        pdet: pd,
+      )));
     }
   }
 
   showAlertDialog(BuildContext context, String message, String heading,
       String buttonAcceptTitle) {
-    // set up the buttons
-
     Widget continueButton = FlatButton(
       child: Text(buttonAcceptTitle),
       onPressed: () {
@@ -364,7 +365,6 @@ class _InputDetailsState extends State<InputDetails> {
       },
     );
 
-    // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text(heading),
       content: Text(message),
@@ -373,7 +373,6 @@ class _InputDetailsState extends State<InputDetails> {
       ],
     );
 
-    // show the dialog
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -391,7 +390,6 @@ class _InputDetailsState extends State<InputDetails> {
     DocumentReference documentReference =
         Firestore.instance.collection("drafts").document(_name);
 
-    //Map
     Map<String, String> todos = {"Name_": _name};
 
     documentReference.setData(todos).whenComplete(() {
