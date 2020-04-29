@@ -87,6 +87,13 @@ class _InputDetailsState extends State<InputDetails> {
                           hintText: "Name",
                           contentPadding: EdgeInsets.only(bottom: 10)),
                       onChanged: (value) => _name = value,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return "Please enter a name";
+                        }
+
+                        return null;
+                      },
                     ),
                   ),
                   Container(
@@ -222,31 +229,56 @@ class _InputDetailsState extends State<InputDetails> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
                         Container(
-                          width: MediaQuery.of(context).size.width / 2.25,
+                          width: MediaQuery.of(context).size.width / 2.5,
+                          padding: EdgeInsets.only(right: 50),
                           child: TextFormField(
                             style:
                                 TextStyle(color: Colors.black, fontSize: 20.0),
                             decoration: new InputDecoration(
+                                suffix: Text("m"),
                                 border: InputBorder.none,
                                 hintStyle: TextStyle(color: Colors.black),
                                 hintText: "Height",
                                 contentPadding: EdgeInsets.only(bottom: 10)),
                             keyboardType: TextInputType.number,
                             onChanged: (value) => _height = value,
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return "Please enter your height";
+                              }
+
+                              return null;
+                            },
                           ),
                         ),
                         Container(
-                          width: MediaQuery.of(context).size.width / 2.15,
+                          width: 2,
+                          height: 30,
+                          margin: EdgeInsets.only(bottom: 10, right: 20),
+                          color: Colors.deepPurpleAccent,
+                          child: Text(""),
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width / 2.5,
+                          padding: EdgeInsets.only(right: 50),
                           child: TextFormField(
                             style:
                                 TextStyle(color: Colors.black, fontSize: 20.0),
                             decoration: new InputDecoration(
+                                suffix: Text("kg"),
                                 border: InputBorder.none,
                                 hintStyle: TextStyle(color: Colors.black),
                                 hintText: "Weight",
                                 contentPadding: EdgeInsets.only(bottom: 10)),
                             keyboardType: TextInputType.number,
                             onChanged: (value) => _weight = value,
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return "Please enter yout weight";
+                              }
+
+                              return null;
+                            },
                           ),
                         )
                       ],
@@ -352,6 +384,7 @@ class _InputDetailsState extends State<InputDetails> {
       Navigator.of(context).push(FadeRouteBuilder(
           page: ProblemsPage(
         pdet: pd,
+        userId: widget.userId,
       )));
     }
   }

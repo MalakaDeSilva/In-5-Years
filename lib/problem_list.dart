@@ -27,7 +27,6 @@ class _ProblemsState extends State<ProblemsPage> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.userId);
 
     return WillPopScope(
       onWillPop: _onWillPop,
