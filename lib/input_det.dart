@@ -2,8 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:infiveyears/animations/delayed_animation.dart';
+import 'package:infiveyears/animations/fade_out_anim.dart';
 
 import 'package:infiveyears/model/personal_det.dart';
+import 'package:infiveyears/problem_list.dart';
 import 'package:intl/intl.dart';
 
 class InputDetails extends StatefulWidget {
@@ -32,7 +34,7 @@ class _InputDetailsState extends State<InputDetails> {
     final DateTime picked = await showDatePicker(
         context: context,
         initialDate: selectedDate,
-        firstDate: DateTime(2015, 8),
+        firstDate: DateTime(1900, 1),
         lastDate: DateTime(2101));
 
     if (picked != null && picked != selectedDate)
@@ -85,6 +87,13 @@ class _InputDetailsState extends State<InputDetails> {
                           hintText: "Name",
                           contentPadding: EdgeInsets.only(bottom: 10)),
                       onChanged: (value) => _name = value,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return "Please enter a name";
+                        }
+
+                        return null;
+                      },
                     ),
                   ),
                   Container(
@@ -220,31 +229,56 @@ class _InputDetailsState extends State<InputDetails> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
                         Container(
-                          width: MediaQuery.of(context).size.width / 2.25,
+                          width: MediaQuery.of(context).size.width / 2.5,
+                          padding: EdgeInsets.only(right: 50),
                           child: TextFormField(
                             style:
                                 TextStyle(color: Colors.black, fontSize: 20.0),
                             decoration: new InputDecoration(
+                                suffix: Text("m"),
                                 border: InputBorder.none,
                                 hintStyle: TextStyle(color: Colors.black),
                                 hintText: "Height",
                                 contentPadding: EdgeInsets.only(bottom: 10)),
                             keyboardType: TextInputType.number,
                             onChanged: (value) => _height = value,
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return "Please enter your height";
+                              }
+
+                              return null;
+                            },
                           ),
                         ),
                         Container(
-                          width: MediaQuery.of(context).size.width / 2.15,
+                          width: 2,
+                          height: 30,
+                          margin: EdgeInsets.only(bottom: 10, right: 20),
+                          color: Colors.deepPurpleAccent,
+                          child: Text(""),
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width / 2.5,
+                          padding: EdgeInsets.only(right: 50),
                           child: TextFormField(
                             style:
                                 TextStyle(color: Colors.black, fontSize: 20.0),
                             decoration: new InputDecoration(
+                                suffix: Text("kg"),
                                 border: InputBorder.none,
                                 hintStyle: TextStyle(color: Colors.black),
                                 hintText: "Weight",
                                 contentPadding: EdgeInsets.only(bottom: 10)),
                             keyboardType: TextInputType.number,
                             onChanged: (value) => _weight = value,
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return "Please enter yout weight";
+                              }
+
+                              return null;
+                            },
                           ),
                         )
                       ],
@@ -339,26 +373,24 @@ class _InputDetailsState extends State<InputDetails> {
     if (_formKey.currentState.validate()) {
       PersonalDetails pd = new PersonalDetails();
       Timestamp time = Timestamp.fromDate(selectedDate);
+      pd.setValues(_name, time, _civilstat, _gender, double.parse(_height),
+          double.parse(_weight), _liquor, _employment);
       await firestore
           .collection("users")
           .document(widget.userId)
           .collection("queries")
-          .add(pd.toJson(
-              _name,
-              time,
-              _civilstat,
-              _gender,
-              _employment,
-              double.parse(_height),
-              double.parse(_weight),
-              _liquor)); //Returns the DocumentReference
+          .add(pd.toJson()); //Returns the DocumentReference
+
+      Navigator.of(context).push(FadeRouteBuilder(
+          page: ProblemsPage(
+        pdet: pd,
+        userId: widget.userId,
+      )));
     }
   }
 
   showAlertDialog(BuildContext context, String message, String heading,
       String buttonAcceptTitle) {
-    // set up the buttons
-
     Widget continueButton = FlatButton(
       child: Text(buttonAcceptTitle),
       onPressed: () {
@@ -366,7 +398,6 @@ class _InputDetailsState extends State<InputDetails> {
       },
     );
 
-    // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text(heading),
       content: Text(message),
@@ -375,7 +406,6 @@ class _InputDetailsState extends State<InputDetails> {
       ],
     );
 
-    // show the dialog
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -393,7 +423,6 @@ class _InputDetailsState extends State<InputDetails> {
     DocumentReference documentReference =
         Firestore.instance.collection("drafts").document(_name);
 
-    //Map
     Map<String, String> todos = {"Name_": _name};
 
     documentReference.setData(todos).whenComplete(() {

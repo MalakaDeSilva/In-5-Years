@@ -8,8 +8,9 @@ import 'animations/delayed_animation.dart';
 class EditDetails extends StatefulWidget {
   final PersonalDetails pdet;
   final String ref;
+  final String userId;
 
-  EditDetails({this.pdet, this.ref});
+  EditDetails({this.pdet, this.ref, this.userId});
 
   @override
   _EditDetailsState createState() => _EditDetailsState();
@@ -94,6 +95,13 @@ class _EditDetailsState extends State<EditDetails> {
                           hintText: "Name",
                           contentPadding: EdgeInsets.only(bottom: 10)),
                       onChanged: (value) => _name = value,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return "Please enter a name";
+                        }
+
+                        return null;
+                      },
                       initialValue: _name,
                     ),
                   ),
@@ -241,8 +249,22 @@ class _EditDetailsState extends State<EditDetails> {
                                 contentPadding: EdgeInsets.only(bottom: 10)),
                             keyboardType: TextInputType.number,
                             onChanged: (value) => _height = value,
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return "Please enter your height";
+                              }
+
+                              return null;
+                            },
                             initialValue: _height,
                           ),
+                        ),
+                        Container(
+                          width: 2,
+                          height: 30,
+                          margin: EdgeInsets.only(bottom: 10, right: 20),
+                          color: Colors.deepPurpleAccent,
+                          child: Text(""),
                         ),
                         Container(
                           width: MediaQuery.of(context).size.width / 2.15,
@@ -256,6 +278,13 @@ class _EditDetailsState extends State<EditDetails> {
                                 contentPadding: EdgeInsets.only(bottom: 10)),
                             keyboardType: TextInputType.number,
                             onChanged: (value) => _weight = value,
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return "Please enter yout weight";
+                              }
+
+                              return null;
+                            },
                             initialValue: _weight,
                           ),
                         )
@@ -353,15 +382,15 @@ class _EditDetailsState extends State<EditDetails> {
     PersonalDetails pd = new PersonalDetails();
     Timestamp time = Timestamp.fromDate(selectedDate);
 
-    firestore.collection("queries").document(widget.ref).updateData(pd.toJson(
-        _name,
-        time,
-        _civilstat,
-        _gender,
-        _employment,
-        double.parse(_height),
-        double.parse(_weight),
-        _liquor));
+    pd.setValues(_name, time, _civilstat, _gender, double.parse(_height),
+        double.parse(_weight), _liquor, _employment);
+
+    firestore
+        .collection("users")
+        .document(widget.userId)
+        .collection("queries")
+        .document(widget.ref)
+        .updateData(pd.toJson());
 
     Navigator.of(context).pop();
   }
