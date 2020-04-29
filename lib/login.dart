@@ -12,8 +12,6 @@ import 'package:infiveyears/services/auth_services.dart';
 
 var authHandler = new Auth();
 
-String _emailId;
-String _password;
 final _emailIdController = TextEditingController(text: '');
 final _passwordController = TextEditingController(text: '');
 
@@ -79,9 +77,6 @@ class _StateID extends State<Login> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 TextFormField(
-                  onSaved: (value) {
-                    _emailId = value;
-                  },
                   controller: _emailIdController,
                   style: TextStyle(fontSize: 20.0),
                   decoration: InputDecoration(
@@ -94,9 +89,6 @@ class _StateID extends State<Login> {
                   color: Colors.black,
                 ),
                 TextFormField(
-                  onSaved: (value) {
-                    _emailId = value;
-                  },
                   controller: _passwordController,
                   obscureText: passwordVisible,
                   style: TextStyle(fontSize: 20.0),
@@ -164,8 +156,12 @@ class _StateID extends State<Login> {
                 if (!res) {
                   print("error logging in with google");
                 } else {
-                  Navigator.push(context,
-                      new MaterialPageRoute(builder: (context) => new Home(userId: authHandler.getUser().uid,)));
+                  Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (context) => new Home(
+                                userId: authHandler.getUser().uid,
+                              )));
                 }
               },
               shape: new RoundedRectangleBorder(
@@ -200,8 +196,12 @@ class _StateID extends State<Login> {
                 if (!res) {
                   print("error logging in with facebook");
                 } else {
-                  Navigator.push(context,
-                      new MaterialPageRoute(builder: (context) => new Home(userId: authHandler.getUser().uid,)));
+                  Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (context) => new Home(
+                                userId: authHandler.getUser().uid,
+                              )));
                 }
               },
               shape: new RoundedRectangleBorder(

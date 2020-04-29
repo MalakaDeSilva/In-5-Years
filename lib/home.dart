@@ -3,12 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:infiveyears/animations/fade_out_anim.dart';
+import 'package:infiveyears/drafts.dart';
 import 'package:infiveyears/edit_det.dart';
 import 'package:infiveyears/input_det.dart';
-import 'package:infiveyears/animations/fade_out_anim.dart';
 import 'package:infiveyears/model/personal_det.dart';
+import 'package:infiveyears/problem_list.dart';
 import 'package:intl/intl.dart';
-import 'package:infiveyears/drafts.dart';
 
 class Home extends StatefulWidget {
   final String userId;
@@ -130,7 +131,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                           child: Container(
                             child: Image(
                               image: AssetImage("images/swipe-up.png"),
-                              width: 60,
+                              width: 40,
                               fit: BoxFit.scaleDown,
                             ),
                           ),
@@ -193,11 +194,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     PersonalDetails _pdet = PersonalDetails.fromSnapshot(document);
 
     return GestureDetector(
-      onPanUpdate: (details) {
-        if (details.delta.dx > 0) {
-          Navigator.of(context)
-              .push(FadeRouteBuilder(page: InputDetails())); //put the new page
-        }
+      onTap: () {
+        Navigator.of(context).push(FadeRouteBuilder(
+            page: ProblemsPage(
+          pdet: _pdet,
+          userId: widget.userId,
+        )));
       },
       child: AnimatedContainer(
           duration: Duration(milliseconds: 200),
