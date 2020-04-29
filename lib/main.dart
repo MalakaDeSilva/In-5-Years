@@ -25,22 +25,25 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
   GlobalKey rectGetterKey = RectGetter.createGlobalKey();
   Rect rect;
 
+  String animationName = 'animation';
+
   @override
   Widget build(BuildContext context) {
     final color = Colors.white;
 
     return Scaffold(
       body: Container(
-        decoration: new BoxDecoration(
-            gradient: new LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Color.fromARGB(255, 142, 45, 226),
-            Color.fromARGB(255, 74, 0, 224)
-          ],
-        )),
-        child: Stack(
+         height: MediaQuery.of(context).size.height,
+          decoration: new BoxDecoration(
+              gradient: new LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color.fromARGB(255, 142, 45, 226),
+              Color.fromARGB(255, 74, 0, 224)
+            ],
+          )), 
+          child: Stack(
           children: <Widget>[
             Column(
               children: <Widget>[
@@ -76,7 +79,6 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
                             ),
                           ],
                           shape: BoxShape.circle,
-                          //border: Border.all(),
                           color: Colors.black,
                         ),
                       ),
@@ -148,9 +150,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
                 ),
                 Expanded(
                   child: Container(
-                    child: GestureDetector(
-                      onVerticalDragDown: _onVerticalDragDown,
-                    ),
+                    child: GestureDetector(),
                   ),
                 ),
                 DelayedAnimation(
@@ -184,7 +184,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
             _ripple(),
           ],
         ),
-      ),
+          ),
     );
   }
 
@@ -204,8 +204,6 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
         .push(FadeRouteBuilder(page: Login()))
         .then((_) => setState(() => rect = null));
   }
-
-  void _onVerticalDragDown(DragDownDetails details) {}
 
   Widget _ripple() {
     if (rect == null) {

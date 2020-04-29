@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:infiveyears/animations/fade_out_anim.dart';
 import 'package:infiveyears/drafts.dart';
@@ -69,89 +70,92 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     _context = context;
-    return Material(
-      child: Container(
-          decoration: new BoxDecoration(
-              gradient: new LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color.fromARGB(255, 142, 45, 226),
-              Color.fromARGB(255, 74, 0, 224)
-            ],
-          )),
-          child: Column(children: <Widget>[
-            Container(
-              width: 160,
-              margin: EdgeInsets.only(top: 50, left: 0),
-              child: OutlineButton(
-                padding:
-                    EdgeInsets.only(top: 10, bottom: 10, left: 35, right: 35),
-                child: Row(children: <Widget>[
-                  Text(
-                    'Drafts',
-                    style: TextStyle(
-                      fontSize: 20.0,
-                      color: Colors.white70,
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Material(
+        child: Container(
+            decoration: new BoxDecoration(
+                gradient: new LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color.fromARGB(255, 142, 45, 226),
+                Color.fromARGB(255, 74, 0, 224)
+              ],
+            )),
+            child: Column(children: <Widget>[
+              Container(
+                width: 160,
+                margin: EdgeInsets.only(top: 50, left: 0),
+                child: OutlineButton(
+                  padding:
+                      EdgeInsets.only(top: 10, bottom: 10, left: 35, right: 35),
+                  child: Row(children: <Widget>[
+                    Text(
+                      'Drafts',
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        color: Colors.white70,
+                      ),
                     ),
+                    const SizedBox(width: 8.0),
+                    Icon(
+                      Icons.save,
+                      color: Colors.white38,
+                    ),
+                  ]),
+                  shape: new RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(10.0),
                   ),
-                  const SizedBox(width: 8.0),
-                  Icon(
-                    Icons.save,
-                    color: Colors.white38,
-                  ),
-                ]),
-                shape: new RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(10.0),
+                  borderSide: BorderSide(color: Colors.white30, width: 3),
+                  onPressed: _showDraft,
                 ),
-                borderSide: BorderSide(color: Colors.white30, width: 3),
-                onPressed: _showDraft,
               ),
-            ),
-            Expanded(
-                child: GestureDetector(
-              onPanUpdate: (details) {
-                if (details.delta.dx > 0) {
-                  Navigator.of(context).push(FadeRouteBuilder(
-                      page: InputDetails(
-                    userId: widget.userId,
-                  ))); //put the new page
-                }
-              },
-              child: Column(
-                children: <Widget>[
-                  Expanded(child: _buildPages()),
-                  Opacity(
-                    opacity: 0.6,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Transform.translate(
-                          offset: Offset(0, animation.value),
-                          child: Container(
-                            child: Image(
-                              image: AssetImage("images/swipe-up.png"),
-                              width: 40,
-                              fit: BoxFit.scaleDown,
+              Expanded(
+                  child: GestureDetector(
+                onPanUpdate: (details) {
+                  if (details.delta.dx > 0) {
+                    Navigator.of(context).push(FadeRouteBuilder(
+                        page: InputDetails(
+                      userId: widget.userId,
+                    ))); //put the new page
+                  }
+                },
+                child: Column(
+                  children: <Widget>[
+                    Expanded(child: _buildPages()),
+                    Opacity(
+                      opacity: 0.6,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Transform.translate(
+                            offset: Offset(0, animation.value),
+                            child: Container(
+                              child: Image(
+                                image: AssetImage("images/swipe-up.png"),
+                                width: 40,
+                                fit: BoxFit.scaleDown,
+                              ),
                             ),
                           ),
-                        ),
-                        Container(
-                            padding: EdgeInsets.only(bottom: 10),
-                            child: Text(
-                              "Swipe up to add",
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.white,
-                                  fontFamily: "Traffolight"),
-                            ))
-                      ],
+                          Container(
+                              padding: EdgeInsets.only(bottom: 10),
+                              child: Text(
+                                "Swipe up to add",
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.white,
+                                    fontFamily: "Traffolight"),
+                              ))
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            )),
-          ])),
+                  ],
+                ),
+              )),
+            ])),
+      ),
     );
   }
 
@@ -409,5 +413,51 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   void _showDraft() {
     Navigator.push(context, MaterialPageRoute(builder: (context) => Draft()));
+  }
+
+  Future<bool> _onWillPop() async {
+    return (await showDialog(
+          context: context,
+          builder: (context) => new AlertDialog(
+            title: new Text(
+              'Are you sure?',
+              style: TextStyle(
+                  fontSize: 25.0,
+                  color: Colors.black,
+                  fontFamily: "Traffolight",
+                  fontWeight: FontWeight.bold),
+            ),
+            content: new Text(
+              'Do you want to exit?',
+              style: TextStyle(
+                  fontSize: 20.0,
+                  color: Colors.black,
+                  fontFamily: "Traffolight"),
+            ),
+            actions: <Widget>[
+              new FlatButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: new Text(
+                  'No',
+                  style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.black,
+                      fontFamily: "Traffolight"),
+                ),
+              ),
+              new FlatButton(
+                onPressed: () => SystemNavigator.pop(),
+                child: new Text(
+                  'Yes',
+                  style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.black,
+                      fontFamily: "Traffolight"),
+                ),
+              ),
+            ],
+          ),
+        )) ??
+        false;
   }
 }
