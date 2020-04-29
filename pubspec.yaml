@@ -56,8 +56,6 @@ flutter:
     - images/google.png
     - images/facebook.png
     - images/swipe-up.png
-    - images/splash.gif
-    - animations/splash.flr
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
