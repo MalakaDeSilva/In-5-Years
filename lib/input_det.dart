@@ -30,6 +30,7 @@ class _InputDetailsState extends State<InputDetails> {
     super.initState();
   }
 
+  // Copied from https://medium.com/@gauthamns/date-time-input-fields-in-flutter-ae74ffbf4ef2
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
         context: context,
