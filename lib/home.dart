@@ -67,6 +67,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     super.dispose();
   }
 
+  // PageView.Builder referenced from https://medium.com/flutter-community/a-deep-dive-into-pageview-in-flutter-with-custom-transitions-581d9ea6dded
   @override
   Widget build(BuildContext context) {
     _context = context;
@@ -415,6 +416,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     Navigator.push(context, MaterialPageRoute(builder: (context) => Draft()));
   }
 
+  // Copied from https://stackoverflow.com/questions/49356664/how-to-override-the-back-button-in-flutter
   Future<bool> _onWillPop() async {
     return (await showDialog(
           context: context,

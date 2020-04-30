@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+// Code is referenced from https://github.com/sagarshende23/Reflectly-Login-Screen
 class DelayedAnimation extends StatefulWidget {
   final Widget child;
   final int delay;

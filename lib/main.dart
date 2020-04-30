@@ -9,10 +9,12 @@ import './animations/fade_out_anim.dart';
 
 void main() {
   runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
     home: MyApp(),
   ));
 }
 
+// Code is referenced from https://github.com/sagarshende23/Reflectly-Login-Screen
 class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
@@ -33,17 +35,17 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
 
     return Scaffold(
       body: Container(
-         height: MediaQuery.of(context).size.height,
-          decoration: new BoxDecoration(
-              gradient: new LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color.fromARGB(255, 142, 45, 226),
-              Color.fromARGB(255, 74, 0, 224)
-            ],
-          )), 
-          child: Stack(
+        height: MediaQuery.of(context).size.height,
+        decoration: new BoxDecoration(
+            gradient: new LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Color.fromARGB(255, 142, 45, 226),
+            Color.fromARGB(255, 74, 0, 224)
+          ],
+        )),
+        child: Stack(
           children: <Widget>[
             Column(
               children: <Widget>[
@@ -184,10 +186,11 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
             _ripple(),
           ],
         ),
-          ),
+      ),
     );
   }
 
+  // Code is copied from https://fidev.io/ripple-animation/
   void _onTap() {
     setState(() {
       rect = RectGetter.getRectFromKey(rectGetterKey);
@@ -199,12 +202,14 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
     });
   }
 
+  // Code is copied from https://fidev.io/ripple-animation/
   void _goToNextPage() {
     Navigator.of(context)
         .push(FadeRouteBuilder(page: Login()))
         .then((_) => setState(() => rect = null));
   }
 
+  // Code is copied from https://fidev.io/ripple-animation/
   Widget _ripple() {
     if (rect == null) {
       return Container();
