@@ -238,11 +238,13 @@ class _EditDetailsState extends State<EditDetails> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
                         Container(
-                          width: MediaQuery.of(context).size.width / 2.25,
+                          width: MediaQuery.of(context).size.width / 2.5,
+                          padding: EdgeInsets.only(right: 50),
                           child: TextFormField(
                             style:
                                 TextStyle(color: Colors.black, fontSize: 20.0),
                             decoration: new InputDecoration(
+                                suffix: Text("m"),
                                 border: InputBorder.none,
                                 hintStyle: TextStyle(color: Colors.black),
                                 hintText: "Height",
@@ -267,11 +269,13 @@ class _EditDetailsState extends State<EditDetails> {
                           child: Text(""),
                         ),
                         Container(
-                          width: MediaQuery.of(context).size.width / 2.15,
+                          width: MediaQuery.of(context).size.width / 2.5,
+                          padding: EdgeInsets.only(right: 50),
                           child: TextFormField(
                             style:
                                 TextStyle(color: Colors.black, fontSize: 20.0),
                             decoration: new InputDecoration(
+                                suffix: Text("kg"),
                                 border: InputBorder.none,
                                 hintStyle: TextStyle(color: Colors.black),
                                 hintText: "Weight",

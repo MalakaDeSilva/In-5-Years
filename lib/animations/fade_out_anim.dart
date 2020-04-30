@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// Code is referenced from https://medium.com/@agungsurya/create-custom-router-transition-in-flutter-using-pageroutebuilder-73a1a9c4a171
 class FadeRouteBuilder<T> extends PageRouteBuilder<T> {
   final Widget page;
 
